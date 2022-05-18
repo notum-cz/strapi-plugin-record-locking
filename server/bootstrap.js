@@ -6,7 +6,7 @@ module.exports = ({ strapi }) => {
 
   io.on("connection", function (socket) {
     socket.on("openEntity", async ({ entityId, entitySlug, userId }) => {
-      await strapi.db.query("plugin::entity-lock.open-entity").create({
+      await strapi.db.query("plugin::record-locking.open-entity").create({
         data: {
           user: String(userId),
           entityType: entitySlug,
@@ -17,7 +17,7 @@ module.exports = ({ strapi }) => {
     });
 
     socket.on("closeEntity", async ({ entityId, entitySlug, userId }) => {
-      await strapi.db.query("plugin::entity-lock.open-entity").deleteMany({
+      await strapi.db.query("plugin::record-locking.open-entity").deleteMany({
         where: {
           user: String(userId),
           entityType: entitySlug,
@@ -27,7 +27,7 @@ module.exports = ({ strapi }) => {
     });
 
     socket.on("disconnect", async (data) => {
-      await strapi.db.query("plugin::entity-lock.open-entity").deleteMany({
+      await strapi.db.query("plugin::record-locking.open-entity").deleteMany({
         where: {
           connectionId: socket.conn.id,
         },

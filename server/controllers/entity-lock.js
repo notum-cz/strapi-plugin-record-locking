@@ -6,7 +6,7 @@ module.exports = {
     const { id: userId } = ctx.state.user;
 
     const data = await strapi.db
-      .query("plugin::entity-lock.open-entity")
+      .query("plugin::record-locking.open-entity")
       .findOne({
         where: {
           entityItentificator: id,
@@ -34,7 +34,7 @@ module.exports = {
     const { id: userId } = ctx.state.user;
 
     const data = await strapi.db
-      .query("plugin::entity-lock.open-entity")
+      .query("plugin::record-locking.open-entity")
       .create({
         data: {
           user: String(userId),
@@ -50,7 +50,7 @@ module.exports = {
     const { id: userId } = ctx.state.user;
 
     const data = await strapi.db
-      .query("plugin::entity-lock.open-entity")
+      .query("plugin::record-locking.open-entity")
       .deleteMany({
         where: {
           user: String(userId),

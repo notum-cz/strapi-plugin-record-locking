@@ -30,7 +30,7 @@ export default function EntityLock() {
 
     const data = { entityId: id, entitySlug: slug, userId };
 
-    request(`/entity-lock/get-status/${id}/${slug}`).then((response) => {
+    request(`/record-locking/get-status/${id}/${slug}`).then((response) => {
       if (!response) {
         socket.emit("openEntity", data);
       } else {

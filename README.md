@@ -1,3 +1,3 @@
-# Strapi plugin entity-lock
+# Strapi plugin record-locking
 
-A quick description of entity-lock.
+A quick description of record-locking.
