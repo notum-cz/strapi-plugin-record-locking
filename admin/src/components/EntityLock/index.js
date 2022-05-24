@@ -7,6 +7,7 @@ import {
 } from "@strapi/design-system/ModalLayout";
 import { io } from "socket.io-client";
 import { Button, Typography } from "@strapi/design-system";
+import { useIntl } from "react-intl";
 
 import { request, auth } from "@strapi/helper-plugin";
 import { useRouteMatch, useHistory } from "react-router-dom";
@@ -17,6 +18,8 @@ export default function EntityLock() {
   } = useRouteMatch("/content-manager/collectionType/:slug/:id");
   const { goBack } = useHistory();
 
+  const { formatMessage } = useIntl();
+
   const [isLocked, setIsLocked] = useState(false);
   const [username, setUsername] = useState("");
 
@@ -25,7 +28,7 @@ export default function EntityLock() {
   useEffect(() => {
     const socket = io(undefined, {
       reconnectionDelayMax: 10000,
-      rejectUnauthorized: false
+      rejectUnauthorized: false,
     });
 
     const data = { entityId: id, entitySlug: slug, userId };
@@ -60,11 +63,22 @@ export default function EntityLock() {
             as="h2"
             id="title"
           >
+            {formatMessage({
+              id: getTrad("ModalWindow.CurrentlyEditing"),
+              defaultMessage: "This entry is currently edited",
+            })}
             Tento záznam je právě editován
           </Typography>
         </ModalHeader>
         <ModalBody>
-          <Typography>Stránka je aktuálně editovaná uživatelem </Typography>
+          <Typography>
+            {" "}
+            {formatMessage({
+              id: getTrad("ModalWindow.CurrentlyEditingBody"),
+              defaultMessage: "This entry is currently edited by",
+            })}
+            Stránka je aktuálně editovaná uživatelem{" "}
+          </Typography>
           <Typography fontWeight="bold">{username}</Typography>
         </ModalBody>
         <ModalFooter
@@ -75,7 +89,10 @@ export default function EntityLock() {
               }}
               variant="tertiary"
             >
-              Zpět
+              {formatMessage({
+                id: getTrad("ModalWindow.CurrentlyEditing.Button"),
+                defaultMessage: "Back",
+              })}
             </Button>
           }
         />
