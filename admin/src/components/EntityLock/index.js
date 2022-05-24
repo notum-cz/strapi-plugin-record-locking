@@ -67,7 +67,6 @@ export default function EntityLock() {
               id: getTrad("ModalWindow.CurrentlyEditing"),
               defaultMessage: "This entry is currently edited",
             })}
-            Tento záznam je právě editován
           </Typography>
         </ModalHeader>
         <ModalBody>
@@ -77,7 +76,6 @@ export default function EntityLock() {
               id: getTrad("ModalWindow.CurrentlyEditingBody"),
               defaultMessage: "This entry is currently edited by",
             })}
-            Stránka je aktuálně editovaná uživatelem{" "}
           </Typography>
           <Typography fontWeight="bold">{username}</Typography>
         </ModalBody>
