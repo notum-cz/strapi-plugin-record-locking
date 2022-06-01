@@ -12,6 +12,8 @@ import { useIntl } from "react-intl";
 import { request, auth } from "@strapi/helper-plugin";
 import { useRouteMatch, useHistory } from "react-router-dom";
 
+import { getTrad } from "../../utils/getTrad";
+
 export default function EntityLock() {
   const {
     params: { slug, id },
