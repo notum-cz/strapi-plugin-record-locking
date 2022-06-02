@@ -38,7 +38,7 @@ module.exports = ({ env }) => ({
 
 ## 🐛 Bugs
 
-We are using [GitHub Issues](https://github.com/notum-cz/strapi-plugin-content-versioning/issues) to manage bugs. <br>
+We are using [GitHub Issues](https://github.com/notum-cz/strapi-plugin-record-locking/issues) to manage bugs. <br>
 If you want to help us you would be a rock ⭐.
 
 ## 🧔 Authors
