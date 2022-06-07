@@ -28,7 +28,7 @@ export default function EntityLock() {
   const { id: userId } = auth.getUserInfo();
 
   useEffect(() => {
-    const socket = io("https://id-strapi.triglav.local/", {
+    const socket = io(undefined, {
       reconnectionDelayMax: 10000,
       rejectUnauthorized: false,
     });
