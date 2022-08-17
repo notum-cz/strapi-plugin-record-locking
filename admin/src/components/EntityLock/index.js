@@ -12,7 +12,7 @@ import { useIntl } from "react-intl";
 import { request, auth } from "@strapi/helper-plugin";
 import { useRouteMatch, useHistory } from "react-router-dom";
 
-import { getTrad } from "../../utils/getTrad";
+import getTrad from "../../utils/getTrad";
 
 export default function EntityLock() {
   const {
@@ -73,13 +73,14 @@ export default function EntityLock() {
         </ModalHeader>
         <ModalBody>
           <Typography>
-            {" "}
             {formatMessage({
               id: getTrad("ModalWindow.CurrentlyEditingBody"),
               defaultMessage: "This entry is currently edited by",
+            }, {
+              username: <Typography fontWeight="bold">{username}</Typography>
             })}
           </Typography>
-          <Typography fontWeight="bold">{username}</Typography>
+
         </ModalBody>
         <ModalFooter
           startActions={
