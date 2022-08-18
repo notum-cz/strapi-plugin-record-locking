@@ -1,5 +1,5 @@
 {
   "ModalWindow.CurrentlyEditing": "Tento záznam je právě editován",
-  "ModalWindow.CurrentlyEditingBody": "Tento záznam je právě editován uživatelem: ",
+  "ModalWindow.CurrentlyEditingBody": "Tento záznam je právě editován uživatelem {username}",
   "ModalWindow.CurrentlyEditing.Button": "Zpět"
 }
