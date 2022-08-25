@@ -28,6 +28,8 @@ export default function EntityLock() {
   const { id: userId } = auth.getUserInfo();
 
   useEffect(() => {
+    if (id === 'create') return () => { };
+
     const socket = io(undefined, {
       reconnectionDelayMax: 10000,
       rejectUnauthorized: false,
