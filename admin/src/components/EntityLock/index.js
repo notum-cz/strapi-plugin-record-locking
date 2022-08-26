@@ -28,7 +28,7 @@ export default function EntityLock() {
   const { id: userId } = auth.getUserInfo();
 
   useEffect(() => {
-    if (id === 'create') return () => { };
+    if (id === 'create') return false;
 
     const socket = io(undefined, {
       reconnectionDelayMax: 10000,
