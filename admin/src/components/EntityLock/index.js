@@ -29,16 +29,20 @@ export default function EntityLock() {
   const { id: userId } = auth.getUserInfo();
   const lockingData = { entityId: id, entitySlug: slug, userId };
 
-  const attemptLocking = () => (
-    request(`/record-locking/get-status/${id}/${slug}`).then((response) => {
-      if (!response) {
-        socket.current?.emit("openEntity", lockingData);
-      } else {
-        setIsLocked(true);
-        setUsername(response.editedBy);
-      }
-    })
-  );
+  const attemptLocking = () => {
+    try {
+      request(`/record-locking/get-status/${id}/${slug}`).then((response) => {
+        if (!response) {
+          socket.current?.emit("openEntity", lockingData);
+        } else {
+          setIsLocked(true);
+          setUsername(response.editedBy);
+        }
+      })
+    } catch (error) {
+      console.warn(error)
+    }
+  }
 
   useEffect(() => {
     socket.current = io(undefined, {
