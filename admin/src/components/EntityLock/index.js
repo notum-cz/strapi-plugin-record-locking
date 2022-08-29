@@ -47,7 +47,7 @@ export default function EntityLock() {
   useEffect(() => {
     if (id === 'create') return false;
 
-    const socket = io(undefined, {
+    socket.current = io(undefined, {
       reconnectionDelayMax: 10000,
       rejectUnauthorized: false,
     });
