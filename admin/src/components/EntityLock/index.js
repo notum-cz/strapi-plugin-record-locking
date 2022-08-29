@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   ModalLayout,
   ModalBody,
@@ -21,11 +21,28 @@ export default function EntityLock() {
   const { goBack } = useHistory();
 
   const { formatMessage } = useIntl();
-
+  
   const [isLocked, setIsLocked] = useState(false);
   const [username, setUsername] = useState("");
+  const socket = useRef({});
 
   const { id: userId } = auth.getUserInfo();
+  const lockingData = { entityId: id, entitySlug: slug, userId };
+
+  const attemptLocking = () => {
+    try {
+      request(`/record-locking/get-status/${id}/${slug}`).then((response) => {
+        if (!response) {
+          socket.current?.emit("openEntity", lockingData);
+        } else {
+          setIsLocked(true);
+          setUsername(response.editedBy);
+        }
+      })
+    } catch (error) {
+      console.warn(error)
+    }
+  }
 
   useEffect(() => {
     if (id === 'create') return false;
@@ -34,21 +51,13 @@ export default function EntityLock() {
       reconnectionDelayMax: 10000,
       rejectUnauthorized: false,
     });
-
-    const data = { entityId: id, entitySlug: slug, userId };
-
-    request(`/record-locking/get-status/${id}/${slug}`).then((response) => {
-      if (!response) {
-        socket.emit("openEntity", data);
-      } else {
-        setIsLocked(true);
-        setUsername(response.editedBy);
-      }
-    });
+    socket.current.io.on('reconnect', attemptLocking)
+    
+    attemptLocking();
 
     return () => {
-      socket.emit("closeEntity", data);
-      socket.close();
+      socket.current.emit("closeEntity", data);
+      socket.current.close();
     };
   }, []);
 
