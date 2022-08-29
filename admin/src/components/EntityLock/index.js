@@ -56,7 +56,7 @@ export default function EntityLock() {
     attemptLocking();
 
     return () => {
-      socket.current.emit("closeEntity", data);
+      socket.current.emit("closeEntity", lockingData);
       socket.current.close();
     };
   }, []);
