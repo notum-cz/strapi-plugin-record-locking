@@ -15,13 +15,25 @@ import { useRouteMatch, useHistory } from "react-router-dom";
 import getTrad from "../../utils/getTrad";
 
 export default function EntityLock() {
-  const {
-    params: { slug, id },
-  } = useRouteMatch("/content-manager/collectionType/:slug/:id");
+
+  const collectionType = useRouteMatch("/content-manager/collectionType/:slug/:id");
+  const singleType = useRouteMatch("/content-manager/singleType/:slug");
+
+  let params, statusUrl;
+  if (collectionType) {
+    params = collectionType.params;
+    statusUrl = `/record-locking/get-status/${params.id}/`
+  } else {
+    params = singleType.params;
+    statusUrl = `/record-locking/get-status/`;
+  }
+  const { id, slug } = params;
+  statusUrl += slug
+
   const { goBack } = useHistory();
 
   const { formatMessage } = useIntl();
-  
+
   const [isLocked, setIsLocked] = useState(false);
   const [username, setUsername] = useState("");
   const socket = useRef({});
@@ -31,7 +43,7 @@ export default function EntityLock() {
 
   const attemptLocking = () => {
     try {
-      request(`/record-locking/get-status/${id}/${slug}`).then((response) => {
+      request(statusUrl).then((response) => {
         if (!response) {
           socket.current?.emit("openEntity", lockingData);
         } else {
@@ -52,7 +64,7 @@ export default function EntityLock() {
       rejectUnauthorized: false,
     });
     socket.current.io.on('reconnect', attemptLocking)
-    
+
     attemptLocking();
 
     return () => {
