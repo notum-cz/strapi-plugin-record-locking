@@ -13,14 +13,16 @@ This plugin provides the ability to stop data loss when two users are editing th
 
 ```
 npm i @notum-cz/strapi-plugin-record-locking
+
 yarn add @notum-cz/strapi-plugin-record-locking
 ```
 
-## 🖐⚠️ Read before installation
+## <br> <br> 🖐 ⚠️ Read before installation  
+---
 
-1. You need to create/modify file `config/plugins.js` with
+### <br> 1. You need to create/modify file `config/plugins.js` with
 
-```
+```js
 module.exports = ({ env }) => ({
  "record-locking": {
     enabled: true,
@@ -28,7 +30,39 @@ module.exports = ({ env }) => ({
 });
 ```
 
+### <br> 2. To suppport websocket protocol configure strapi middleware
 
+*For the `config/middlewares.js` file you will need to either replace `'strapi::security'` with middleware object (example below) or update your existing configuration accordingly...*
+1. Ensure that `"ws:"` and `"wss:"` are present in strapi::security config under  **`contentSecurityPolicy.directives.connect-src`**
+2. Rebuild strapi and test record locking features.
+3. There should be no `Content Security Policy` error in the console.
+
+```js
+module.exports = [
+  'strapi::errors',
+  {
+    name: "strapi::security",
+    config: {
+      contentSecurityPolicy: {
+        useDefaults: true,
+        directives: {
+          "connect-src": ["'self'", "https:",  "wss:", "http:"],
+          "img-src": [
+            "'self'",
+            "data:",
+            "blob:",
+          ],
+          "media-src": ["'self'", "data:", "blob:"],
+          upgradeInsecureRequests: null,
+        },
+      },
+    },
+  },
+  'strapi::cors', ...
+```
+> This is optional but **recommended** as Socket.io will fallback to using http protocol and throws the following error in web console...  
+`Refused to connect to <protocol>://<url> because it does not appear in the connect-src directive of the Content Security Policy`
+---
 ## 🛣️ Road map
 
 - ✨ Option to choose specific collection types
@@ -44,6 +78,7 @@ If you want to help us you would be a rock ⭐.
 ## 🧔 Authors
 
 The main star: **Martin Čapek** https://github.com/martincapek <br>
+Developer: **Filip Janko** https://github.com/fikoun <br>
 Project owner: **Ondřej Janošík** <br>
 
 #### 🚀 Created with passion by [Notum Technologies](https://notum.cz/en)
