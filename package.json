@@ -1,6 +1,6 @@
 {
   "name": "@notum-cz/strapi-plugin-record-locking",
-  "version": "0.2.3",
+  "version": "0.3.0",
   "description": "Hey I am editing, don't change my content",
   "strapi": {
     "displayName": "Record locking",
