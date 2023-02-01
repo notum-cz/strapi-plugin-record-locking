@@ -16,15 +16,15 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@strapi/utils": "^4.1.8",
-    "socket.io": "^4.4.1",
-    "socket.io-client": "^4.4.1"
+    "@strapi/utils": "^4.6.0",
+    "socket.io": "^4.5.4",
+    "socket.io-client": "^4.5.4"
   },
   "peerDependencies": {
     "@strapi/strapi": "^4.1.8"
   },
   "engines": {
-    "node": ">=12.x.x <=16.x.x",
+    "node": ">=14.19.1 <=18.x.x",
     "npm": ">=6.0.0"
   },
   "main": "strapi-admin.js",
