@@ -16,12 +16,12 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@strapi/utils": "^4.6.0",
+    "@strapi/utils": "^4.7.1",
     "socket.io": "^4.5.4",
     "socket.io-client": "^4.5.4"
   },
   "peerDependencies": {
-    "@strapi/strapi": "^4.1.8"
+    "@strapi/strapi": "^4.7.1"
   },
   "engines": {
     "node": ">=14.19.1 <=18.x.x",
