@@ -28,7 +28,7 @@ module.exports = {
 
     return false;
   },
-  
+
   async getStatusByIdAndSlug(ctx) {
     const { id, slug } = ctx.request.params;
     const { id: userId } = ctx.state.user;
@@ -37,7 +37,7 @@ module.exports = {
       .query("plugin::record-locking.open-entity")
       .findOne({
         where: {
-          entityItentificator: id,
+          entityIdentifier: id,
           entityType: slug,
           user: {
             $not: userId,
@@ -62,15 +62,13 @@ module.exports = {
     const { id, slug } = ctx.request.params;
     const { id: userId } = ctx.state.user;
 
-    const data = await strapi.db
-      .query("plugin::record-locking.open-entity")
-      .create({
-        data: {
-          user: String(userId),
-          entityType: slug,
-          entityItentificator: id,
-        },
-      });
+    await strapi.db.query("plugin::record-locking.open-entity").create({
+      data: {
+        user: String(userId),
+        entityType: slug,
+        entityIdentifier: id,
+      },
+    });
 
     return true;
   },
@@ -78,15 +76,13 @@ module.exports = {
     const { id, slug } = ctx.request.params;
     const { id: userId } = ctx.state.user;
 
-    const data = await strapi.db
-      .query("plugin::record-locking.open-entity")
-      .deleteMany({
-        where: {
-          user: String(userId),
-          entityType: slug,
-          entityItentificator: id,
-        },
-      });
+    await strapi.db.query("plugin::record-locking.open-entity").deleteMany({
+      where: {
+        user: String(userId),
+        entityType: slug,
+        entityIdentifier: id,
+      },
+    });
 
     return "DELETED";
   },
