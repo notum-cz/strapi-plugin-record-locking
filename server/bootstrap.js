@@ -35,5 +35,6 @@ module.exports = ({ strapi }) => {
     });
   });
 
+  strapi.db.query("plugin::record-locking.open-entity").deleteMany();
   strapi.io = io;
 };
