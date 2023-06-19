@@ -19,7 +19,7 @@ module.exports = {
   //     },
   //   },
   attributes: {
-    entityItentificator: {
+    entityIdentifier: {
       type: "string",
       configurable: false,
     },

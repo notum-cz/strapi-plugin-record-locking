@@ -26,7 +26,7 @@ module.exports = [
   {
     method: "DELETE",
     path: "/delete-status/:id/:slug",
-    handler: "entityLock.setStatusByIdAndSlug",
+    handler: "entityLock.deleteStatusByIdAndSlug",
     config: {
       policies: [],
     },

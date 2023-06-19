@@ -10,7 +10,7 @@ module.exports = ({ strapi }) => {
         data: {
           user: String(userId),
           entityType: entitySlug,
-          entityItentificator: entityId,
+          entityIdentifier: entityId,
           connectionId: socket.conn.id,
         },
       });
@@ -21,7 +21,7 @@ module.exports = ({ strapi }) => {
         where: {
           user: String(userId),
           entityType: entitySlug,
-          entityItentificator: entityId,
+          entityIdentifier: entityId,
         },
       });
     });

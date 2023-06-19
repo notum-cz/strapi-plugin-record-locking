@@ -12,16 +12,17 @@
   "author": "Notum Technologies s.r.o. <sales@notum.cz> (https://notum.cz/en/strapi)",
   "maintainers": [
     "Notum Technologies s.r.o. <sales@notum.cz> (https://notum.cz/en/strapi)",
-    "Martin Čapek <martin.capek@notum.cz> (https://notum.cz/en/strapi)"
+    "Martin Čapek <martin.capek@notum.cz> (https://notum.cz/en/strapi)",
+    "Ondřej Mikulčík <ondrej.mikulcik@notum.cz> (https://notum.cz/en/strapi)"
   ],
   "license": "MIT",
   "dependencies": {
-    "@strapi/utils": "^4.7.1",
-    "socket.io": "^4.5.4",
-    "socket.io-client": "^4.5.4"
+    "@strapi/utils": "^4.11.1",
+    "socket.io": "^4.6.2",
+    "socket.io-client": "^4.6.2"
   },
   "peerDependencies": {
-    "@strapi/strapi": "^4.7.1"
+    "@strapi/strapi": "^4.11.1"
   },
   "engines": {
     "node": ">=14.19.1 <=18.x.x",
