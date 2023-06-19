@@ -69,8 +69,10 @@ export default function EntityLock() {
     }
 
     return () => {
-      socket.current.emit("closeEntity", lockingData);
-      socket.current.close();
+      if (id !== "create") {
+        socket.current.emit("closeEntity", lockingData);
+        socket.current.close();
+      }
     };
   }, []);
 
