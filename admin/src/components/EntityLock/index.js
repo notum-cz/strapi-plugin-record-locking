@@ -15,20 +15,21 @@ import { useRouteMatch, useHistory } from "react-router-dom";
 import getTrad from "../../utils/getTrad";
 
 export default function EntityLock() {
-
-  const collectionType = useRouteMatch("/content-manager/collectionType/:slug/:id");
+  const collectionType = useRouteMatch(
+    "/content-manager/collectionType/:slug/:id"
+  );
   const singleType = useRouteMatch("/content-manager/singleType/:slug");
 
   let params, statusUrl;
   if (collectionType) {
     params = collectionType.params;
-    statusUrl = `/record-locking/get-status/${params.id}/`
+    statusUrl = `/record-locking/get-status/${params.id}/`;
   } else {
     params = singleType.params;
     statusUrl = `/record-locking/get-status/`;
   }
   const { id, slug } = params;
-  statusUrl += slug
+  statusUrl += slug;
 
   const { goBack } = useHistory();
 
@@ -50,26 +51,28 @@ export default function EntityLock() {
           setIsLocked(true);
           setUsername(response.editedBy);
         }
-      })
+      });
     } catch (error) {
-      console.warn(error)
+      console.warn(error);
     }
-  }
+  };
 
   useEffect(() => {
-    if (id === 'create') return false;
+    if (id !== "create") {
+      socket.current = io(undefined, {
+        reconnectionDelayMax: 10000,
+        rejectUnauthorized: false,
+      });
+      socket.current.io.on("reconnect", attemptLocking);
 
-    socket.current = io(undefined, {
-      reconnectionDelayMax: 10000,
-      rejectUnauthorized: false,
-    });
-    socket.current.io.on('reconnect', attemptLocking)
-
-    attemptLocking();
+      attemptLocking();
+    }
 
     return () => {
-      socket.current.emit("closeEntity", lockingData);
-      socket.current.close();
+      if (id !== "create") {
+        socket.current.emit("closeEntity", lockingData);
+        socket.current.close();
+      }
     };
   }, []);
 
@@ -96,14 +99,16 @@ export default function EntityLock() {
         </ModalHeader>
         <ModalBody>
           <Typography>
-            {formatMessage({
-              id: getTrad("ModalWindow.CurrentlyEditingBody"),
-              defaultMessage: "This entry is currently edited by",
-            }, {
-              username: <Typography fontWeight="bold">{username}</Typography>
-            })}
+            {formatMessage(
+              {
+                id: getTrad("ModalWindow.CurrentlyEditingBody"),
+                defaultMessage: "This entry is currently edited by",
+              },
+              {
+                username: <Typography fontWeight="bold">{username}</Typography>,
+              }
+            )}
           </Typography>
-
         </ModalBody>
         <ModalFooter
           startActions={
