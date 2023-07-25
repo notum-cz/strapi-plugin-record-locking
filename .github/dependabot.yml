@@ -16,5 +16,5 @@ updates:
       include: scope
       prefix: "chore:"
     labels:
-      - "dependencies"
+      - "pr: chore"
     
