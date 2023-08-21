@@ -1,11 +1,13 @@
-"use strict";
-
 module.exports = ({ strapi }) => {
   // bootstrap phase
   const io = require("socket.io")(strapi.server.httpServer);
 
   io.on("connection", function (socket) {
-    socket.on("openEntity", async ({ entityId, entitySlug, userId }) => {
+    socket.on("openEntity", async ({ entitySlug, entityId }) => {
+      const userId = strapi.admin.services.token.decodeJwtToken(
+        socket.handshake.auth.token
+      ).payload.id;
+
       const usersPermissionsForThisContent = await strapi.db.connection
         .select("p.id", "p.action", "p.subject")
         .from("admin_permissions AS p")

@@ -62,6 +62,13 @@ export default function EntityLock() {
       socket.current = io(undefined, {
         reconnectionDelayMax: 10000,
         rejectUnauthorized: false,
+        auth: (cb) => {
+          cb({
+            token:
+              JSON.parse(localStorage.getItem("jwtToken")) ??
+              JSON.parse(sessionStorage.getItem("jwtToken")),
+          });
+        },
       });
       socket.current.io.on("reconnect", attemptLocking);
 
