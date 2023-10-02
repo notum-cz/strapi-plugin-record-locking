@@ -66,9 +66,10 @@ module.exports = [
 ---
 ## 🛣️ Road map
 
-- ✨ Implement an option to select specific collection types.
-- ✨ Add a "Takeover" button.
-- ✨ Introduce the ability to prioritize roles (preventing Authors from taking over SuperAdmin).
+Are any of these features significant to you? Please show your support by giving a thumbs up on the linked issues. This will help us assess their priority on the roadmap.
+
+- ✨ [An option to select specific collection types](https://github.com/notum-cz/strapi-plugin-record-locking/issues/46)
+- ✨ ["Takeover" button](https://github.com/notum-cz/strapi-plugin-record-locking/issues/47)
 
 
 ## 🐛 Bugs
