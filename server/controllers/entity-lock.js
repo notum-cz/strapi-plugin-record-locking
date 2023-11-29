@@ -1,9 +1,11 @@
 "use strict";
 
+const {DEFAULT_TRANSPORTS} = require("../constants/transports");
+
 module.exports = {
   async getSettings(ctx) {
     const settings = {
-      transports: strapi.plugin('record-locking').config('transports')
+      transports: strapi.plugin('record-locking').config('transports') || DEFAULT_TRANSPORTS
     }
 
     ctx.send(settings);
