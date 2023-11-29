@@ -1,6 +1,14 @@
 module.exports = [
   {
     method: "GET",
+    path: "/settings",
+    handler: "entityLock.getSettings",
+    config: {
+      policies: [],
+    },
+  },
+  {
+    method: "GET",
     path: "/get-status/:slug",
     handler: "entityLock.getStatusBySlug",
     config: {

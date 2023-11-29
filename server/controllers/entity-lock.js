@@ -1,6 +1,13 @@
 "use strict";
 
 module.exports = {
+  async getSettings(ctx) {
+    const settings = {
+      transports: strapi.plugin('record-locking').config('transports')
+    }
+
+    ctx.send(settings);
+  },
   async getStatusBySlug(ctx) {
     const { slug } = ctx.request.params;
     const { id: userId } = ctx.state.user;

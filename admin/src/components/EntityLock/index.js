@@ -37,6 +37,8 @@ export default function EntityLock() {
 
   const [isLocked, setIsLocked] = useState(false);
   const [username, setUsername] = useState("");
+  const [settings, setSettings] = useState(null)
+
   const socket = useRef({});
 
   const { id: userId } = auth.getUserInfo();
@@ -58,7 +60,13 @@ export default function EntityLock() {
   };
 
   useEffect(() => {
-    if (id !== "create") {
+    request('/record-locking/settings/').then((response) => {
+      setSettings(response)
+    })
+  }, [])
+
+  useEffect(() => {
+    if (id !== "create" && settings) {
       socket.current = io(undefined, {
         reconnectionDelayMax: 10000,
         rejectUnauthorized: false,
@@ -69,6 +77,7 @@ export default function EntityLock() {
               JSON.parse(sessionStorage.getItem("jwtToken")),
           });
         },
+        transports: settings.transports
       });
       socket.current.io.on("reconnect", attemptLocking);
 
@@ -76,12 +85,12 @@ export default function EntityLock() {
     }
 
     return () => {
-      if (id !== "create") {
+      if (id !== "create" && settings) {
         socket.current.emit("closeEntity", lockingData);
         socket.current.close();
       }
     };
-  }, []);
+  }, [settings]);
 
   return (
     isLocked && (
