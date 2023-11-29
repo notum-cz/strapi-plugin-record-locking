@@ -30,6 +30,24 @@ module.exports = ({ env }) => ({
 });
 ```
 
+We use websockets and you can determine the necessary transport yourself:
+```js
+module.exports = ({ env }) => ({
+ "record-locking": {
+     enabled: true,
+     config: {
+         transports: ["websocket"]
+     }
+  },
+});
+```
+
+If you do not specify a transport, the default parameters will be applied:
+```js
+DEFAULT_TRANSPORTS: ["polling", "websocket", "webtransport"]
+```
+
+
 ### 3. Enable websocket support by configuring the Strapi middleware.
 
 In the `config/middlewares.js` file either replace `'strapi::security'` with  a middleware object (see the example below) or update your existing configuration accordingly.
