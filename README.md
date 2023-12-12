@@ -102,6 +102,10 @@ Developer: **Filip Janko** https://github.com/fikoun <br>
 Maintainer: **Ondřej Mikulčík** https://github.com/omikulcik <br>
 Project owner: **Ondřej Janošík** <br>
 
+## 💬 Community
+
+Join our [Discord server](https://discord.gg/hZRCcfWq) to discuss new features, implementation challenges or anything related to this plugin.  
+
 ### 🚀 Created with passion by [Notum Technologies](https://notum.cz/en)
 
 - Official STRAPI partner and Czech based custom development agency.
