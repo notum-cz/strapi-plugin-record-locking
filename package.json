@@ -25,7 +25,7 @@
     "@strapi/strapi": "^4.11.1"
   },
   "engines": {
-    "node": ">=14.19.1 <=18.x.x",
+    "node": ">=14.19.1 <=20.x.x",
     "npm": ">=6.0.0"
   },
   "main": "strapi-admin.js",
