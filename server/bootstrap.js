@@ -1,14 +1,9 @@
-const { Server } = require("socket.io")
-const {DEFAULT_TRANSPORTS} = require("./constants/transports");
+const { Server } = require("socket.io");
 
 module.exports = ({ strapi }) => {
   // bootstrap phase
 
-  const config = strapi.config.get('plugin.record-locking')
-
-  const io = new Server(strapi.server.httpServer, {
-    transports: config?.transports || DEFAULT_TRANSPORTS
-  });
+  const io = new Server(strapi.server.httpServer);
 
   io.on("connection", function (socket) {
     socket.on("openEntity", async ({ entitySlug, entityId }) => {
