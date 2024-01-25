@@ -9,16 +9,17 @@ import { io } from "socket.io-client";
 import { Button, Typography } from "@strapi/design-system";
 import { useIntl } from "react-intl";
 
-import { request, auth } from "@strapi/helper-plugin";
+import { useFetchClient, auth } from "@strapi/helper-plugin";
 import { useRouteMatch, useHistory } from "react-router-dom";
 
 import getTrad from "../../utils/getTrad";
 
 export default function EntityLock() {
   const collectionType = useRouteMatch(
-    "/content-manager/collectionType/:slug/:id"
+    "/content-manager/collection-types/:slug/:id"
   );
-  const singleType = useRouteMatch("/content-manager/singleType/:slug");
+  const singleType = useRouteMatch("/content-manager/single-types/:slug");
+  const { get } = useFetchClient();
 
   let params, statusUrl;
   if (collectionType) {
@@ -37,21 +38,21 @@ export default function EntityLock() {
 
   const [isLocked, setIsLocked] = useState(false);
   const [username, setUsername] = useState("");
-  const [settings, setSettings] = useState(null)
+  const [settings, setSettings] = useState(null);
 
   const socket = useRef({});
 
-  const { id: userId } = auth.getUserInfo();
+  const { id: userId } = auth.get("userInfo");
   const lockingData = { entityId: id, entitySlug: slug, userId };
 
   const attemptLocking = () => {
     try {
-      request(statusUrl).then((response) => {
-        if (!response) {
+      get(statusUrl).then((response) => {
+        if (!response.data) {
           socket.current?.emit("openEntity", lockingData);
         } else {
           setIsLocked(true);
-          setUsername(response.editedBy);
+          setUsername(response.data.editedBy);
         }
       });
     } catch (error) {
@@ -60,10 +61,10 @@ export default function EntityLock() {
   };
 
   useEffect(() => {
-    request('/record-locking/settings/').then((response) => {
-      setSettings(response)
-    })
-  }, [])
+    get("/record-locking/settings/").then((response) => {
+      setSettings(response);
+    });
+  }, []);
 
   useEffect(() => {
     if (id !== "create" && settings) {
@@ -77,7 +78,7 @@ export default function EntityLock() {
               JSON.parse(sessionStorage.getItem("jwtToken")),
           });
         },
-        transports: settings.transports
+        transports: settings.transports,
       });
       socket.current.io.on("reconnect", attemptLocking);
 
