@@ -17,7 +17,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@strapi/utils": "^4.17.1",
+    "@strapi/utils": "^4.20.3",
     "socket.io": "^4.7.4",
     "socket.io-client": "^4.7.4"
   },
