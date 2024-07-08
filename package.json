@@ -19,7 +19,7 @@
   ],
   "main": "strapi-admin.js",
   "dependencies": {
-    "@strapi/utils": "^4.25.1",
+    "@strapi/utils": "^4.25.2",
     "socket.io": "^4.7.5",
     "socket.io-client": "^4.7.5"
   },
