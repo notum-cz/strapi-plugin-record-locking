@@ -99,7 +99,7 @@ If you're interested in helping us, you would be a rock ⭐.
 
 The main star: **Martin Čapek** https://github.com/martincapek <br>
 Developer: **Filip Janko** https://github.com/fikoun <br>
-Maintainer: **Ondřej Mikulčík** https://github.com/omikulcik <br>
+Maintainer: **Dominik Juriga** https://github.com/dominik-juriga <br>
 Project owner: **Ondřej Janošík** <br>
 
 ## 💬 Community
