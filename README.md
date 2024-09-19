@@ -98,8 +98,8 @@ If you're interested in helping us, you would be a rock ⭐.
 ## 🧔 Authors
 
 The main star: **Martin Čapek** https://github.com/martincapek <br>
-Developer: **Filip Janko** https://github.com/fikoun <br>
-Maintainer: **Dominik Juriga** https://github.com/dominik-juriga <br>
+Original Maintainer: **Ondřej Mikulčík** https://github.com/omikulcik <br>
+Active Maintainer: **Dominik Juriga** https://github.com/dominik-juriga <br>
 Project owner: **Ondřej Janošík** <br>
 
 ## 💬 Community
