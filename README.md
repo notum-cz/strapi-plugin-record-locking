@@ -10,13 +10,13 @@ This plugin provides the functionality to prevent data loss in cases where multi
 
 Plugin version 2.x is aimed at Strapi V5. If you need support for Strapi V4, please follow the 1.x releases. What's new:
 
-- TypeScript rewrite
-- Overall code refactor to make it safer & more understandable
-- Strapi V5 support
+- TypeScript rewrite.
+- Overall code refactor to make it safer & more readable.
+- Strapi V5 support.
   - Records are now matched based on `document_id` attribute.
 
 ### Migration from 1.x to 2.x
-We're not providing migration scripts at the moment, thefore you'll have to migrate manually:
+Since the plugin does not retain any data, we're not providing migration scripts for the database. Strapi should update the columns automatically, however if this does not happen, you can update the columns manually when migrating to Strapi V5:
 
 - column `entityType` has been renamed to `entityId`
 - column `entityIdentifier` has been renamed to `entityDocumentId`
