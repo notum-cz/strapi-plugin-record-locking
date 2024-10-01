@@ -1,5 +1,5 @@
 {
   "ModalWindow.CurrentlyEditing": "Tento záznam někdo právě upravuje",
   "ModalWindow.CurrentlyEditingBody": "S tímto záznamem aktuálně pracuje {username}",
-  "ModalWindow.CurrentlyEditing.Button": "Spět na seznam"
+  "ModalWindow.CurrentlyEditing.Button": "Zpět na seznam"
 }

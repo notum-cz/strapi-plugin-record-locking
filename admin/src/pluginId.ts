@@ -1,3 +1,3 @@
-import pluginPkg  from '../../package.json'
+import pluginPkg from '../../package.json';
 
-export const PLUGIN_ID = pluginPkg.name.replace(/^@strapi\/plugin-/i, '');
+export const PLUGIN_ID = pluginPkg.name.replace(/^@notum-cz\/strapi-plugin-/i, '');
