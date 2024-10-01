@@ -1,7 +1,6 @@
 import EntityLock from './components/EntityLock';
 import { Initializer } from './components/Initializer';
 import { PLUGIN_ID } from './pluginId';
-import { getTranslation } from './utils/getTranslation';
 
 export default {
   register(app: any) {
