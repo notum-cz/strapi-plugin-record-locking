@@ -1,5 +1,5 @@
 {
-  "ModalWindow.CurrentlyEditing": "Tento záznam je právě editován",
-  "ModalWindow.CurrentlyEditingBody": "Tento záznam je právě editován uživatelem {username}",
-  "ModalWindow.CurrentlyEditing.Button": "Zpět"
+  "ModalWindow.CurrentlyEditing": "Tento záznam někdo právě upravuje",
+  "ModalWindow.CurrentlyEditingBody": "S tímto záznamem aktuálně pracuje {username}",
+  "ModalWindow.CurrentlyEditing.Button": "Zpět na seznam"
 }
