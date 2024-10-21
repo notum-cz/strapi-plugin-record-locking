@@ -2431,7 +2431,7 @@
     typedoc-github-wiki-theme "1.1.0"
     typedoc-plugin-markdown "3.17.1"
 
-"@strapi/typescript-utils@5.0.0", "@strapi/typescript-utils@^5.0.0":
+"@strapi/typescript-utils@5.0.0":
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/@strapi/typescript-utils/-/typescript-utils-5.0.0.tgz#fe5a82608d9dc9d6e146d6a38e992dc087bd46f8"
   integrity sha512-yAeRIPSQytvwB+OSqq0t4Jyt2Ynh8S1moiRAQWf8toLgZi8kFKmlaOM6mWOENnBi0zpeku1J06ZV46iRNGJP5Q==
@@ -2441,6 +2441,18 @@
     fs-extra "11.2.0"
     lodash "4.17.21"
     prettier "3.2.5"
+    typescript "5.3.2"
+
+"@strapi/typescript-utils@^5.1.0":
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/@strapi/typescript-utils/-/typescript-utils-5.1.0.tgz#9221c9367e7a403b1824f98a25d41f129343196e"
+  integrity sha512-01aZpS/Spp+X0QTMMJxvd8MLt1KBJlpgpceECFY8VWgwqzFK0dzY8E6Y1xv1sep5KP6W5OGAYdw3qucOVmbPuA==
+  dependencies:
+    chalk "4.1.2"
+    cli-table3 "0.6.5"
+    fs-extra "11.2.0"
+    lodash "4.17.21"
+    prettier "3.3.3"
     typescript "5.3.2"
 
 "@strapi/ui-primitives@2.0.0-rc.11":
@@ -8485,7 +8497,7 @@ prettier@3.2.5:
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-3.2.5.tgz#e52bc3090586e824964a8813b09aba6233b28368"
   integrity sha512-3/GWa9aOC0YeD7LUfvOG2NiDyhOWRvt1k+rcKhOuYnMY24iiCphgneUfJDyFXd6rZCAnuLBv6UeAULtrhT/F4A==
 
-prettier@^3.3.3:
+prettier@3.3.3, prettier@^3.3.3:
   version "3.3.3"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-3.3.3.tgz#30c54fe0be0d8d12e6ae61dbb10109ea00d53105"
   integrity sha512-i2tDNA0O5IrMO757lfrdQZCc2jPNDVntV0m/+4whiDfWaTKfMNgR7Qz0NAeGz/nRqF4m5/6CLzbP4/liHt12Ew==
