@@ -2052,10 +2052,10 @@
     "@uiw/react-codemirror" "4.22.2"
     react-remove-scroll "2.5.10"
 
-"@strapi/design-system@^2.0.0-rc.11":
-  version "2.0.0-rc.11"
-  resolved "https://registry.yarnpkg.com/@strapi/design-system/-/design-system-2.0.0-rc.11.tgz#28b77c0c22690d5f2e9d395cac7545a124b27429"
-  integrity sha512-myHSOqRsWpXsM9jp9Jx/d8cj/K4MNs+LzAqAwE4+Sd9MuKnIfnOhe6J9hAT29TtimMerymScjOE8b1uyYy3l7w==
+"@strapi/design-system@^2.0.0-rc.14":
+  version "2.0.0-rc.14"
+  resolved "https://registry.yarnpkg.com/@strapi/design-system/-/design-system-2.0.0-rc.14.tgz#7478f50b3740311a3df3b929f410699b039cf5ef"
+  integrity sha512-zOtArGfAQmKO5qqRE0IlONfjR1JL2VL/KjV3hE++KSybOZgfhbdckN4svpNtJ6i2Pv+glm7nHdu9h6AHRBuujQ==
   dependencies:
     "@codemirror/lang-json" "6.0.1"
     "@floating-ui/react-dom" "2.1.0"
@@ -2076,7 +2076,7 @@
     "@radix-ui/react-switch" "1.0.3"
     "@radix-ui/react-tabs" "1.0.4"
     "@radix-ui/react-tooltip" "1.0.7"
-    "@strapi/ui-primitives" "2.0.0-rc.11"
+    "@strapi/ui-primitives" "2.0.0-rc.14"
     "@uiw/react-codemirror" "4.22.2"
     react-remove-scroll "2.5.10"
 
@@ -2365,10 +2365,10 @@
     prettier "3.3.3"
     typescript "5.3.2"
 
-"@strapi/ui-primitives@2.0.0-rc.11":
-  version "2.0.0-rc.11"
-  resolved "https://registry.yarnpkg.com/@strapi/ui-primitives/-/ui-primitives-2.0.0-rc.11.tgz#f66cb4c39f75f374f7ecff042d91058d68e9280b"
-  integrity sha512-8lLIs338IxfLX5ga9gpoH7ORYwk3Hdpify+emur+FQInwCcr99BfBBqYNCdPoe0fcWn2hyUIyngwjVvfjcCZfg==
+"@strapi/ui-primitives@2.0.0-rc.12":
+  version "2.0.0-rc.12"
+  resolved "https://registry.yarnpkg.com/@strapi/ui-primitives/-/ui-primitives-2.0.0-rc.12.tgz#25c8ed914de603a9d85baf519bcb5dcd6da0d7bd"
+  integrity sha512-roFSirCbI/eGTYLwNu0pOrB5WZ5RKJh60gp5GXoQ7ogSk7aRR+5NuXOuTEZvPqvZr/1I5YRufZEIGfAnm0INng==
   dependencies:
     "@radix-ui/number" "1.0.1"
     "@radix-ui/primitive" "1.0.1"
@@ -2392,10 +2392,10 @@
     aria-hidden "1.2.4"
     react-remove-scroll "2.5.10"
 
-"@strapi/ui-primitives@2.0.0-rc.12":
-  version "2.0.0-rc.12"
-  resolved "https://registry.yarnpkg.com/@strapi/ui-primitives/-/ui-primitives-2.0.0-rc.12.tgz#25c8ed914de603a9d85baf519bcb5dcd6da0d7bd"
-  integrity sha512-roFSirCbI/eGTYLwNu0pOrB5WZ5RKJh60gp5GXoQ7ogSk7aRR+5NuXOuTEZvPqvZr/1I5YRufZEIGfAnm0INng==
+"@strapi/ui-primitives@2.0.0-rc.14":
+  version "2.0.0-rc.14"
+  resolved "https://registry.yarnpkg.com/@strapi/ui-primitives/-/ui-primitives-2.0.0-rc.14.tgz#b09a93ef9a69971886f87cbed076d735af6f4909"
+  integrity sha512-lCl370AKFJXjEJmZHW9r8m8gXwgQs+K2WqND2sykL3+1VNjawDhThnRtYqYxheCf10vW8aS0Zd1CduLZ6EoEjg==
   dependencies:
     "@radix-ui/number" "1.0.1"
     "@radix-ui/primitive" "1.0.1"
