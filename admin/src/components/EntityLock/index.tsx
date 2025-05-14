@@ -12,7 +12,9 @@ import { getTranslation } from '../../utils/getTranslation';
 const useLockingData = () => {
   const collectionType = useMatch('/content-manager/collection-types/:entityId/:entityDocumentId');
   const singleType = useMatch('/content-manager/single-types/:entityId');
-  const cloneCollectionType = useMatch('/content-manager/collection-types/:entityId/clone/:entityDocumentId');
+  const cloneCollectionType = useMatch(
+    '/content-manager/collection-types/:entityId/clone/:entityDocumentId'
+  );
   const user = useAuth('ENTITY_LOCK', (state) => state.user);
 
   if (!user) return null;
@@ -66,7 +68,12 @@ const useLockStatus = () => {
   useEffect(() => {
     const token = localStorage.getItem('jwtToken') || sessionStorage.getItem('jwtToken');
 
-    if (token && lockingData && lockingData?.requestData.entityDocumentId !== 'create' && settings) {
+    if (
+      token &&
+      lockingData &&
+      lockingData?.requestData.entityDocumentId !== 'create' &&
+      settings
+    ) {
       socket.current = io(undefined, {
         reconnectionDelayMax: 10000,
         rejectUnauthorized: false,
