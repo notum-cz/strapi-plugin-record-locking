@@ -8,6 +8,7 @@ import { useMatch, useNavigate } from 'react-router-dom';
 import { Modal } from '@strapi/design-system';
 import { useAuth, useFetchClient } from '@strapi/strapi/admin';
 import { getTranslation } from '../../utils/getTranslation';
+import { getCookieValue } from '../../utils/cookies';
 
 const useLockingData = () => {
   const collectionType = useMatch('/content-manager/collection-types/:entityId/:entityDocumentId');
@@ -64,15 +65,15 @@ const useLockStatus = () => {
   }, []);
 
   useEffect(() => {
-    const token = localStorage.getItem('jwtToken') || sessionStorage.getItem('jwtToken');
-
+    const tokenFromStorage = localStorage.getItem('jwtToken') || sessionStorage.getItem('jwtToken');
+    const token = tokenFromStorage ? JSON.parse(tokenFromStorage) : getCookieValue('jwtToken') || '';
     if (token && lockingData && lockingData?.requestData.entityDocumentId !== 'create' && settings) {
       socket.current = io(undefined, {
         reconnectionDelayMax: 10000,
         rejectUnauthorized: false,
         auth: (cb) => {
           cb({
-            token: JSON.parse(token),
+            token: token,
           });
         },
         transports: settings.transports,
