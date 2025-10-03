@@ -66,7 +66,14 @@ const useLockStatus = () => {
 
   useEffect(() => {
     const tokenFromStorage = localStorage.getItem('jwtToken') || sessionStorage.getItem('jwtToken');
-    const token = tokenFromStorage ? JSON.parse(tokenFromStorage) : getCookieValue('jwtToken') || '';
+    let token = '';
+    try  {
+      token = tokenFromStorage ? JSON.parse(tokenFromStorage) : getCookieValue('jwtToken') || '';
+    }
+    catch (error) {
+      console.error('Error getting token from storage');
+      console.error(error);
+    }
     if (token && lockingData && lockingData?.requestData.entityDocumentId !== 'create' && settings) {
       socket.current = io(undefined, {
         reconnectionDelayMax: 10000,
