@@ -66,12 +66,9 @@ const useLockStatus = () => {
 
   useEffect(() => {
     const tokenFromStorage = localStorage.getItem('jwtToken') || sessionStorage.getItem('jwtToken');
-    let token: string | null = null;
+    let token = '';
     try  {
-      if (getCookieValue('jwtToken'))
-        token = getCookieValue('jwtToken');
-      else if (tokenFromStorage)
-        token = JSON.parse(tokenFromStorage);
+      token = tokenFromStorage ? JSON.parse(tokenFromStorage) : getCookieValue('jwtToken') || '';
     }
     catch (error) {
       console.error('Error getting token from storage');
