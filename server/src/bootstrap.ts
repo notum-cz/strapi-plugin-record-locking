@@ -6,14 +6,18 @@ const bootstrap = ({ strapi }: { strapi: Core.Strapi }) => {
 
   const io = new Server(strapi.server.httpServer);
 
+  const getUserIdFromToken = (token: string): string | null => {
+    const userId = strapi.admin.services.token.decodeJwtToken?.(token)?.payload?.id ||
+    // @ts-expect-error TS2339: sessionManager does not exist on strapi typings for Strapi < v5.24.2
+    strapi.sessionManager?.('admin').validateAccessToken?.(token)?.payload?.userId ||
+    null;
+    return userId;
+  };
+
   io.on('connection', (socket) => {
     socket.on('openEntity', async ({ entityDocumentId, entityId }) => {
       try {
-        // @ts-ignore
-        const userId = strapi.admin.services.token.decodeJwtToken?.(socket.handshake.auth.token)?.payload?.id ||
-          // @ts-ignore
-          strapi.sessionManager?.('admin').validateAccessToken?.(socket.handshake.auth.token)?.payload?.userId ||
-          null;
+        const userId = getUserIdFromToken(socket.handshake.auth.token);
 
         if (userId) {
           const usersPermissionsForThisContent = await strapi.db.connection
@@ -39,6 +43,7 @@ const bootstrap = ({ strapi }: { strapi: Core.Strapi }) => {
           }
         }
     } catch (error) {
+      console.error('Error creating a record-locking entry.');
       console.error(error);
     }
     });
