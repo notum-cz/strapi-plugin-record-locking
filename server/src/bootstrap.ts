@@ -23,23 +23,32 @@ const bootstrap = ({ strapi }: { strapi: Core.Strapi }) => {
           ['create', 'delete', 'publish'].some((operation) => perm.action.includes(operation))
         ).length !== 0;
       if (userHasAdequatePermissions) {
-        await strapi.db.query('plugin::record-locking.open-entity').create({
-          data: {
-            user: String(userId),
-            entityId,
-            entityDocumentId,
-            connectionId: socket.id,
-          },
-        });
+        if (entityDocumentId) {
+          await strapi.db.query('plugin::record-locking.open-entity').create({
+            data: {
+              user: String(userId),
+              entityId,
+              entityDocumentId: entityDocumentId,
+              connectionId: socket.id,
+            },
+          });
+        } else {
+          await strapi.db.query('plugin::record-locking.open-entity').create({
+            data: {
+              user: String(userId),
+              entityId,
+              connectionId: socket.id,
+            },
+          });
+        }
       }
     });
 
-    socket.on('closeEntity', async ({ entityId, entityDocumentId, userId }) => {
+    socket.on('closeEntity', async ({ entityId, userId }) => {
       await strapi.db.query('plugin::record-locking.open-entity').deleteMany({
         where: {
           user: String(userId),
-          entityId: entityId,
-          entityDocumentId,
+          entityId,
         },
       });
     });
