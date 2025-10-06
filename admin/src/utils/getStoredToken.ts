@@ -17,7 +17,7 @@ const getCookieValue = (name: string): string | null => {
  *
  * @returns The jwtToken value as string if found, otherwise empty string.
  */
-export const getStoredToken = (): string => {
+const getStoredToken = (): string => {
     for (const storage of [localStorage, sessionStorage]) {
       const raw = storage.getItem('jwtToken');
       if (raw) {
@@ -30,3 +30,5 @@ export const getStoredToken = (): string => {
     }
     return getCookieValue('jwtToken') || '';
 };
+
+export { getStoredToken };
