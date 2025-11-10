@@ -1,5 +1,7 @@
 {
   "ModalWindow.CurrentlyEditing": "This entry is currently being edited",
   "ModalWindow.CurrentlyEditingBody": "This entry is currently being edited by {username}",
-  "ModalWindow.CurrentlyEditing.Button": "Back"
+  "ModalWindow.CurrentlyEditing.Button": "Back",
+  "ModalWindow.TakeoverCurrentlyEditing.Button": "Takeover",
+  "ModalWindow.CurrentlyTakenOverBody": "This entry is taken over for editing by {username}"
 }
