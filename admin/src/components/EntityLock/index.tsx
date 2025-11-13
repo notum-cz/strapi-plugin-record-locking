@@ -56,7 +56,7 @@ const useLockStatus = () => {
   const socket = useRef<Socket | null>(null);
   const [isLocked, setIsLocked] = useState<boolean>(false);
   const [username, setUsername] = useState<string>('');
-  const [settings, setSettings] = useState<{ transports: Array<string> } | null>(null);
+  const [settings, setSettings] = useState<{ transports: Array<string>, showOKButtonToIgnoreLockWarning: boolean, showTakeoverButton: boolean } | null>(null);
   const [isTakenOver, setIsTakenOver] = useState<boolean>(false);
 
   useEffect(() => {
@@ -118,6 +118,7 @@ const useLockStatus = () => {
         if (response.success) {
           setIsLocked(false);
           setUsername('');
+          location.reload();
         } else {
           console.warn(response.error);
         }
@@ -134,6 +135,7 @@ const useLockStatus = () => {
     attemptEntityLocking,
     takeoverEntityLock,
     isTakenOver,
+    settings,
   };
 };
 
@@ -174,14 +176,18 @@ export default function EntityLock() {
               <Button variant="tertiary">OK</Button>
             </Modal.Close>
             <Box>
-            <Button marginRight={1}
-              onClick={lockStatus.takeoverEntityLock}
-            >
-              {formatMessage({
-                id: getTranslation('ModalWindow.TakeoverCurrentlyEditing.Button'),
-                defaultMessage: 'Takeover',
-              })}
-            </Button>            
+              {
+                (lockStatus.settings?.showTakeoverButton ?? false) && (
+                  <Button marginRight={1}
+                  onClick={lockStatus.takeoverEntityLock}
+                >
+                  {formatMessage({
+                    id: getTranslation('ModalWindow.TakeoverCurrentlyEditing.Button'),
+                    defaultMessage: 'Takeover',
+                  })}
+                </Button>                   
+                )
+              }           
             <Button
               marginLeft={1}
               onClick={() => {
