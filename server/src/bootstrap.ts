@@ -4,6 +4,15 @@ import { Server } from 'socket.io';
 const bootstrap = ({ strapi }: { strapi: Core.Strapi }) => {
   // bootstrap phase
 
+  const include: string[] | undefined = strapi.plugin('record-locking').config('include');
+  const exclude: string[] | undefined = strapi.plugin('record-locking').config('exclude');
+
+  if (include && exclude) {
+    console.warn('Both include and exclude cannot be used together for record-locking, ignoring exclude configuration.');
+  }
+
+  const isCollectionLockable = (collection: string) => include !== undefined ? include.includes(collection) : exclude !== undefined ? !exclude.includes(collection) : true;
+
   const io = new Server(strapi.server.httpServer);
 
   const getUserIdFromToken = (token: string): string | undefined  =>
@@ -33,8 +42,9 @@ const bootstrap = ({ strapi }: { strapi: Core.Strapi }) => {
   io.on('connection', (socket) => {
     socket.on('openEntity', async ({ entityDocumentId, entityId }) => {
       try {
+        const lockable = isCollectionLockable(entityId);
         const userHasAdequatePermissions = await doesUserHaveAdequatePermissions(socket.handshake.auth.token, entityId);
-        if (userHasAdequatePermissions) {
+        if (lockable && userHasAdequatePermissions) {
             const userId = getUserIdFromToken(socket.handshake.auth.token);
             await strapi.db.query('plugin::record-locking.open-entity').create({
               data: {
@@ -53,6 +63,11 @@ const bootstrap = ({ strapi }: { strapi: Core.Strapi }) => {
 
     socket.on('takeoverEntity', async ({ entityId, entityDocumentId }, callback) => {
       try {
+        const lockable = isCollectionLockable(entityId);
+        if (!lockable) {
+          callback({success: false, error: 'Collection is configured to be not lockable.'});
+          return;
+        }
         const userHasAdequatePermissions = await doesUserHaveAdequatePermissions(socket.handshake.auth.token, entityId);
         if (userHasAdequatePermissions) {
           const existingLockRecords = await strapi.db.query('plugin::record-locking.open-entity').findMany({

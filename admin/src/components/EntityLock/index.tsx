@@ -56,8 +56,10 @@ const useLockStatus = () => {
   const socket = useRef<Socket | null>(null);
   const [isLocked, setIsLocked] = useState<boolean>(false);
   const [username, setUsername] = useState<string>('');
-  const [settings, setSettings] = useState<{ transports: Array<string>, showOKButtonToIgnoreLockWarning: boolean, showTakeoverButton: boolean } | null>(null);
+  const [settings, setSettings] = useState<{ transports: Array<string>, showOKButtonToIgnoreLockWarning: boolean, showTakeoverButton: boolean, include: string[] | undefined, exclude: string[] | undefined } | null>(null);
   const [isTakenOver, setIsTakenOver] = useState<boolean>(false);
+
+  const isCollectionLockable = (entityId: string) => settings?.include !== undefined ? settings.include.includes(entityId) : settings?.exclude !== undefined ? !settings.exclude.includes(entityId) : true;
 
   useEffect(() => {
     get('/record-locking/settings').then((response) => {
@@ -67,7 +69,9 @@ const useLockStatus = () => {
 
   useEffect(() => {
     const token = getStoredToken();
-    if (token && lockingData && lockingData?.requestData.entityDocumentId !== 'create' && settings) {
+    if (token && lockingData && lockingData?.requestData.entityDocumentId !== 'create' && settings
+      && (lockingData?.requestData.entityId && isCollectionLockable(lockingData?.requestData.entityId))
+    ) {
       socket.current = io(undefined, {
         reconnectionDelayMax: 10000,
         rejectUnauthorized: false,
@@ -88,7 +92,8 @@ const useLockStatus = () => {
     }
 
     return () => {
-      if (lockingData?.requestData.entityDocumentId !== 'create' && settings) {
+      if (token &&lockingData?.requestData.entityDocumentId !== 'create' && settings
+        && (lockingData?.requestData.entityId && isCollectionLockable(lockingData?.requestData.entityId))) {
         socket.current?.off('takeoverEntityPerformed');
         socket.current?.emit('closeEntity', lockingData?.requestData);
         socket.current?.close();

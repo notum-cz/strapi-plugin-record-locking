@@ -7,6 +7,8 @@ const controller = ({ strapi }: { strapi: Core.Strapi }) => ({
       transports:
         strapi.plugin('record-locking').config('transports') || DEFAULT_TRANSPORTS,
       showTakeoverButton: strapi.plugin('record-locking').config('showTakeoverButton') ?? DEFAULT_FOR_SHOW_TAKEOVER_BUTTON,
+      include: strapi.plugin('record-locking').config('include'),
+      exclude: strapi.plugin('record-locking').config('exclude'),
     };
 
     ctx.send(settings);
