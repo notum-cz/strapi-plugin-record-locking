@@ -6,7 +6,7 @@ This plugin provides the functionality to prevent data loss in cases where multi
 
 ![Record Locking Plugin Example](./record-locking.png)
 
-## ⚠️ We've released version 2.0.0 for the Record Locking Plugin.
+## ⚠️ Plugin version 2.x aimed at Strapi v5
 
 Plugin version 2.x is aimed at Strapi V5. If you need support for Strapi V4, please follow the 1.x releases. What's new:
 
@@ -22,11 +22,16 @@ Since the plugin does not retain any data, we're not providing migration scripts
 - column `entityType` has been renamed to `entityId`
 - column `entityIdentifier` has been renamed to `entityDocumentId`
 
+### Newer plugin features only on 2.x
+- The new plugin features like allowing takeover of existing locks or configuring specific collections to include or exclude from locking are available only on version 2.x that works with Strapi V5.
+
 ## 🙉 What does the plugin do for you?
 
 ✅ Safeguards against concurrent editing by restricting access to a record to a single user at a time.
 
 ✅ Provides clear visibility of the current editing user, enabling you to easily identify who is working on the record.
+
+✅ Allows taking over the editing lock from the currently editing user, if needed.
 
 ## 🧑‍💻 Installation
 
@@ -106,12 +111,63 @@ module.exports = [
 
 ---
 
-## 🛣️ Road map
+### 3. Enable the takeover feature.
+In the `config/plugin.ts`, enable the `Takeover` button via the following configuration change (this button is disabled by default):
 
-Are any of these features significant to you? Please show your support by giving a thumbs up on the linked issues. This will help us assess their priority on the roadmap.
+```
+module.exports = ({ env }) => ({
+  'record-locking': {
+    enabled: true,
+    config: {
+      showTakeoverButton: true,
+    },
+  },
+});
+```
+- Once this configuration is enabled, the the modal that specifies that an entry is being edited by another user will have a `Takeover` button.
 
-- ✨ [An option to select specific collection types](https://github.com/notum-cz/strapi-plugin-record-locking/issues/46)
-- ✨ ["Takeover" button](https://github.com/notum-cz/strapi-plugin-record-locking/issues/47)
+![Record Locking Plugin Takeover Feature](./before-takeover.png)
+
+- Clicking this button will change the record lock to the user taking over.
+- The user previously editing will see a modal with a message that the entry has been taken over.
+
+![Record Locking Plugin Takeover Feature](./after-takeover.png)
+
+### 4. Configure specific collections to include or exclude from locking
+By default, record locking is performed for every collection and single-type in the setup. To enable record locking only for a subset of collections or single-types, use the following plugin configuration.
+
+#### 4.1. Enable locking only for a specified list of collections
+To enable locking only for a provided list of collections or single-types, use the `include` configurable. In the below example, locking is enabled only for `article` and `post` collections:
+
+```
+module.exports = ({ env }) => ({
+  'record-locking': {
+    enabled: true,
+    config: {
+      include: ['api::article.article', 'api::post.post'],
+    },
+  },
+});
+
+```
+
+#### 4.2. Disable locking for a specified list of collections
+To exclude only a certain list of collections or single-types from locking, use the `exclude` configurable. In the below example, locking is enabled for all the collections except the `user` table belonging to Users-Permissions plugin.
+
+```
+module.exports = ({ env }) => ({
+  'record-locking': {
+    enabled: true,
+    config: {
+      exclude: ['plugin::users-permissions.user'],
+    },
+  },
+});
+
+```
+
+⚠️ Use only one of `include` and `exclude` configurables. If both are specified, only the `include` list considered and `exclude` list is ignored.
+
 
 ## 🐛 Bugs
 
