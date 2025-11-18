@@ -12,12 +12,12 @@ const controller = ({ strapi }: { strapi: Core.Strapi }) => ({
   },
 
   async getStatusBySlug(ctx) {
-    const { entityDocumentId } = ctx.request.params;
+    const { entityId } = ctx.request.params;
     const { id: userId } = ctx.state.user;
 
     const data = await strapi.db.query('plugin::record-locking.open-entity').findOne({
       where: {
-        entityDocumentId,
+        entityId,
         user: {
           $not: userId,
         },
