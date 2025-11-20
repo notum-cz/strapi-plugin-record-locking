@@ -106,12 +106,63 @@ module.exports = [
 
 ---
 
-## 🛣️ Road map
+### 3. Enable the takeover feature.
+In the `config/plugin.ts`, enable the `Takeover` button via the following configuration change (this button is disabled by default):
 
-Are any of these features significant to you? Please show your support by giving a thumbs up on the linked issues. This will help us assess their priority on the roadmap.
+```
+module.exports = ({ env }) => ({
+  'record-locking': {
+    enabled: true,
+    config: {
+      showTakeoverButton: true,
+    },
+  },
+});
+```
+- Once this configuration is enabled, the the modal that specifies that an entry is being edited by another user will have a `Takeover` button.
 
-- ✨ [An option to select specific collection types](https://github.com/notum-cz/strapi-plugin-record-locking/issues/46)
-- ✨ ["Takeover" button](https://github.com/notum-cz/strapi-plugin-record-locking/issues/47)
+![Record Locking Plugin Takeover Feature](./before-takeover.png)
+
+- Clicking this button will change the record lock to the user taking over.
+- The user previously editing will see a modal with a message that the entry has been taken over.
+
+![Record Locking Plugin Takeover Feature](./after-takeover.png)
+
+### 4. Configure specific collections to include or exclude from locking
+By default, record locking is performed for every collection and single-type in the setup. To enable record locking only for a subset of collections or single-types, use the following plugin configuration.
+
+#### 4.1. Enable locking only for a specified list of collections
+To enable locking only for a provided list of collections or single-types, use the `include` configurable. In the below example, locking is enabled only for `article` and `post` collections:
+
+```
+module.exports = ({ env }) => ({
+  'record-locking': {
+    enabled: true,
+    config: {
+      include: ['api::article.article', 'api::post.post'],
+    },
+  },
+});
+
+```
+
+#### 4.2. Disable locking for a specified list of collections
+To exclude only a certain list of collections or single-types from locking, use the `exclude` configurable. In the below example, locking is enabled for all the collections except the `user` table belonging to Users-Permissions plugin.
+
+```
+module.exports = ({ env }) => ({
+  'record-locking': {
+    enabled: true,
+    config: {
+      exclude: ['plugin::users-permissions.user'],
+    },
+  },
+});
+
+```
+
+⚠️ Use only one of `include` and `exclude` configurables. If both are specified, only the `include` list considered and `exclude` list is ignored.
+
 
 ## 🐛 Bugs
 
