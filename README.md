@@ -106,12 +106,33 @@ module.exports = [
 
 ---
 
+### 3. Enable the takeover feature.
+In the `config/plugin.ts`, enable the `Takeover` button via the following configuration change (this button is disabled by default):
+
+```
+module.exports = ({ env }) => ({
+  'record-locking': {
+    enabled: true,
+    config: {
+      showTakeoverButton: true,
+    },
+  },
+});
+```
+- Once this configuration is enabled, the modal that specifies that an entry is being edited by another user will have a `Takeover` button.
+
+![Record Locking Plugin Takeover Feature](./before-takeover.png)
+
+- Clicking this button will change the record lock to the user taking over.
+- The user previously editing will see a modal with a message that the entry has been taken over.
+
+![Record Locking Plugin Takeover Feature](./after-takeover.png)
+
 ## 🛣️ Road map
 
 Are any of these features significant to you? Please show your support by giving a thumbs up on the linked issues. This will help us assess their priority on the roadmap.
 
 - ✨ [An option to select specific collection types](https://github.com/notum-cz/strapi-plugin-record-locking/issues/46)
-- ✨ ["Takeover" button](https://github.com/notum-cz/strapi-plugin-record-locking/issues/47)
 
 ## 🐛 Bugs
 
