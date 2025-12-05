@@ -96,7 +96,7 @@ const useLockStatus = () => {
     }
 
     return () => {
-      if (token &&lockingData?.requestData.entityDocumentId !== 'create' && settings
+      if (token && lockingData?.requestData.entityDocumentId !== 'create' && settings
         && (lockingData?.requestData.entityId && isCollectionLockable(lockingData?.requestData.entityId))) {
         socket.current?.off('takeoverEntityPerformed');
         socket.current?.emit('closeEntity', lockingData?.requestData);

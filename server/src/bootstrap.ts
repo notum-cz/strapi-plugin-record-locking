@@ -37,7 +37,7 @@ const bootstrap = ({ strapi }: { strapi: Core.Strapi }) => {
       return userHasAdequatePermissions;
     }
     return false;
-  }
+  };
   io.on('connection', (socket) => {
     socket.on('openEntity', async ({ entityDocumentId, entityId }) => {
       try {
@@ -97,7 +97,7 @@ const bootstrap = ({ strapi }: { strapi: Core.Strapi }) => {
             if (record.connectionId !== socket.id) {
               io.to(record.connectionId).emit('takeoverEntityPerformed', { entityId, entityDocumentId, username: `${user.firstname} ${user.lastname}` });
             }
-          }                  
+          }
           callback({success: true});
         }
         else {
