@@ -1,0 +1,1 @@
+export const DEFAULT_FOR_SHOW_TAKEOVER_BUTTON = false;
