@@ -1,4 +1,4 @@
-import { Button, Typography, Box } from '@strapi/design-system';
+import { Button, Typography, Flex } from '@strapi/design-system';
 import { useEffect, useRef, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { io, Socket } from 'socket.io-client';
@@ -118,21 +118,17 @@ const useLockStatus = () => {
   };
 
   const takeoverEntityLock = () => {
-    try {
-      socket.current?.emit('takeoverEntity', lockingData?.requestData, (response: { success: boolean, error?: string }) => {
+    socket.current?.emit('takeoverEntity', lockingData?.requestData, (response: { success: boolean, error?: string }) => {
         if (response.success) {
           setIsLocked(false);
           setUsername('');
+          setIsTakenOver(false);
           location.reload();
         } else {
           console.warn(response.error);
         }
-      });
-    }
-    catch (error) {
-      console.warn(error);
-    }
-  }
+    });
+  };
 
   return {
     isLocked,
@@ -180,21 +176,20 @@ export default function EntityLock() {
             <Modal.Close>
               <Button variant="tertiary">OK</Button>
             </Modal.Close>
-            <Box>
+            <Flex gap={2} direction="row">
               {
                 (lockStatus.settings?.showTakeoverButton ?? false) && (
-                  <Button marginRight={1}
+                  <Button
                   onClick={lockStatus.takeoverEntityLock}
                 >
                   {formatMessage({
                     id: getTranslation('ModalWindow.TakeoverCurrentlyEditing.Button'),
                     defaultMessage: 'Takeover',
                   })}
-                </Button>                   
+                </Button>
                 )
-              }           
+              }
             <Button
-              marginLeft={1}
               onClick={() => {
                 navigate(-1);
               }}
@@ -204,7 +199,7 @@ export default function EntityLock() {
                 defaultMessage: 'Go Back',
               })}
             </Button>
-            </Box>
+            </Flex>
           </Modal.Footer>
         </Modal.Content>
       </Modal.Root>
