@@ -1,5 +1,6 @@
 import type { Core } from '@strapi/strapi';
 import { Server } from 'socket.io';
+import { isCollectionLockable } from './utils/lockable';
 
 const bootstrap = ({ strapi }: { strapi: Core.Strapi }) => {
   // bootstrap phase
@@ -10,8 +11,6 @@ const bootstrap = ({ strapi }: { strapi: Core.Strapi }) => {
   if (include && exclude) {
     console.warn('Both include and exclude cannot be used together for record-locking, ignoring exclude configuration.');
   }
-
-  const isCollectionLockable = (collection: string) => include !== undefined ? include.includes(collection) : exclude !== undefined ? !exclude.includes(collection) : true;
 
   const io = new Server(strapi.server.httpServer);
 

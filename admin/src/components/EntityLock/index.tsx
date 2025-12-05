@@ -70,25 +70,29 @@ const useLockStatus = () => {
   useEffect(() => {
     const token = getStoredToken();
     if (token && lockingData && lockingData?.requestData.entityDocumentId !== 'create' && settings
-      && (lockingData?.requestData.entityId && isCollectionLockable(lockingData?.requestData.entityId))
+      && lockingData?.requestData.entityId
     ) {
-      socket.current = io(undefined, {
-        reconnectionDelayMax: 10000,
-        rejectUnauthorized: false,
-        auth: (cb) => {
-          cb({token});
-        },
-        transports: settings.transports,
-      });
-      socket.current.io.on('reconnect', attemptEntityLocking);
-      socket.current.on('takeoverEntityPerformed', (data: { entityDocumentId: string, entityId: string, username: string }) => { 
-        if (lockingData?.requestData.entityDocumentId === data.entityDocumentId && lockingData?.requestData.entityId === data.entityId) {
-          setIsLocked(true);
-          setUsername(data.username);
-          setIsTakenOver(true);
-        }
-      });
-      attemptEntityLocking();
+        get(`/record-locking/is-collection-lockable/${lockingData?.requestData.entityId}`).then((response) => {
+          if (response.data) {
+            socket.current = io(undefined, {
+              reconnectionDelayMax: 10000,
+              rejectUnauthorized: false,
+              auth: (cb) => {
+                cb({token});
+              },
+              transports: settings.transports,
+            });
+            socket.current.io.on('reconnect', attemptEntityLocking);
+            socket.current.on('takeoverEntityPerformed', (data: { entityDocumentId: string, entityId: string, username: string }) => { 
+              if (lockingData?.requestData.entityDocumentId === data.entityDocumentId && lockingData?.requestData.entityId === data.entityId) {
+                setIsLocked(true);
+                setUsername(data.username);
+                setIsTakenOver(true);
+              }
+            });
+            attemptEntityLocking();
+          }
+        });
     }
 
     return () => {

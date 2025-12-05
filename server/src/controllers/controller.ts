@@ -1,6 +1,8 @@
 import type { Core } from '@strapi/strapi';
 import DEFAULT_TRANSPORTS from '../constants/transports';
 import { DEFAULT_FOR_SHOW_TAKEOVER_BUTTON } from '../constants/config';
+import { isCollectionLockable } from '../utils/lockable';
+
 const controller = ({ strapi }: { strapi: Core.Strapi }) => ({
   async getSettings(ctx) {
     const settings = {
@@ -12,6 +14,12 @@ const controller = ({ strapi }: { strapi: Core.Strapi }) => ({
     };
 
     ctx.send(settings);
+  },
+
+  async isCollectionLockable(ctx) {
+    const { entityId } = ctx.request.params;
+    const isLockable = isCollectionLockable(entityId);
+    ctx.send(isLockable);
   },
 
   async getStatusBySlug(ctx) {
