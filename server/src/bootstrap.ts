@@ -68,7 +68,7 @@ const bootstrap = ({ strapi }: { strapi: Core.Strapi }) => {
                 entityDocumentId,
               },
             });
-          }  
+          }
           const userId = getUserIdFromToken(socket.handshake.auth.token);
           await strapi.db.query('plugin::record-locking.open-entity').create({
             data: {
@@ -91,7 +91,7 @@ const bootstrap = ({ strapi }: { strapi: Core.Strapi }) => {
         }
       } catch (error) {
         console.error('Error taking over a record-locking entry:', error);
-        callback({success: false, error: error.message});
+        callback({success: false, error: error?.message ?? 'Unknown error occurred'});
       }
 
     });
