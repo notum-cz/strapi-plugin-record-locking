@@ -124,7 +124,7 @@ module.exports = ({ env }) => ({
   },
 });
 ```
-- Once this configuration is enabled, the the modal that specifies that an entry is being edited by another user will have a `Takeover` button.
+- Once this configuration is enabled, the modal that specifies that an entry is being edited by another user will have a `Takeover` button.
 
 ![Record Locking Plugin Takeover Feature](./before-takeover.png)
 

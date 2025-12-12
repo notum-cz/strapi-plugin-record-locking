@@ -1,4 +1,4 @@
-import { Button, Typography, Box } from '@strapi/design-system';
+import { Button, Typography, Flex } from '@strapi/design-system';
 import { useEffect, useRef, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { io, Socket } from 'socket.io-client';
@@ -70,29 +70,33 @@ const useLockStatus = () => {
   useEffect(() => {
     const token = getStoredToken();
     if (token && lockingData && lockingData?.requestData.entityDocumentId !== 'create' && settings
-      && (lockingData?.requestData.entityId && isCollectionLockable(lockingData?.requestData.entityId))
+      && lockingData?.requestData.entityId
     ) {
-      socket.current = io(undefined, {
-        reconnectionDelayMax: 10000,
-        rejectUnauthorized: false,
-        auth: (cb) => {
-          cb({token});
-        },
-        transports: settings.transports,
-      });
-      socket.current.io.on('reconnect', attemptEntityLocking);
-      socket.current.on('takeoverEntityPerformed', (data: { entityDocumentId: string, entityId: string, username: string }) => { 
-        if (lockingData?.requestData.entityDocumentId === data.entityDocumentId && lockingData?.requestData.entityId === data.entityId) {
-          setIsLocked(true);
-          setUsername(data.username);
-          setIsTakenOver(true);
-        }
-      });
-      attemptEntityLocking();
+        get(`/record-locking/is-collection-lockable/${lockingData?.requestData.entityId}`).then((response) => {
+          if (response.data) {
+            socket.current = io(undefined, {
+              reconnectionDelayMax: 10000,
+              rejectUnauthorized: false,
+              auth: (cb) => {
+                cb({token});
+              },
+              transports: settings.transports,
+            });
+            socket.current.io.on('reconnect', attemptEntityLocking);
+            socket.current.on('takeoverEntityPerformed', (data: { entityDocumentId: string, entityId: string, username: string }) => { 
+              if (lockingData?.requestData.entityDocumentId === data.entityDocumentId && lockingData?.requestData.entityId === data.entityId) {
+                setIsLocked(true);
+                setUsername(data.username);
+                setIsTakenOver(true);
+              }
+            });
+            attemptEntityLocking();
+          }
+        });
     }
 
     return () => {
-      if (token &&lockingData?.requestData.entityDocumentId !== 'create' && settings
+      if (token && lockingData?.requestData.entityDocumentId !== 'create' && settings
         && (lockingData?.requestData.entityId && isCollectionLockable(lockingData?.requestData.entityId))) {
         socket.current?.off('takeoverEntityPerformed');
         socket.current?.emit('closeEntity', lockingData?.requestData);
@@ -118,21 +122,16 @@ const useLockStatus = () => {
   };
 
   const takeoverEntityLock = () => {
-    try {
-      socket.current?.emit('takeoverEntity', lockingData?.requestData, (response: { success: boolean, error?: string }) => {
+    socket.current?.emit('takeoverEntity', lockingData?.requestData, (response: { success: boolean, error?: string }) => {
         if (response.success) {
           setIsLocked(false);
           setUsername('');
-          location.reload();
+          setIsTakenOver(false);
         } else {
           console.warn(response.error);
         }
-      });
-    }
-    catch (error) {
-      console.warn(error);
-    }
-  }
+    });
+  };
 
   return {
     isLocked,
@@ -180,21 +179,20 @@ export default function EntityLock() {
             <Modal.Close>
               <Button variant="tertiary">OK</Button>
             </Modal.Close>
-            <Box>
+            <Flex gap={2} direction="row">
               {
                 (lockStatus.settings?.showTakeoverButton ?? false) && (
-                  <Button marginRight={1}
+                  <Button
                   onClick={lockStatus.takeoverEntityLock}
                 >
                   {formatMessage({
                     id: getTranslation('ModalWindow.TakeoverCurrentlyEditing.Button'),
                     defaultMessage: 'Takeover',
                   })}
-                </Button>                   
+                </Button>
                 )
-              }           
+              }
             <Button
-              marginLeft={1}
               onClick={() => {
                 navigate(-1);
               }}
@@ -204,7 +202,7 @@ export default function EntityLock() {
                 defaultMessage: 'Go Back',
               })}
             </Button>
-            </Box>
+            </Flex>
           </Modal.Footer>
         </Modal.Content>
       </Modal.Root>

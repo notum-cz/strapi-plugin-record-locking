@@ -1,5 +1,6 @@
 import type { Core } from '@strapi/strapi';
 import { Server } from 'socket.io';
+import { isCollectionLockable } from './utils/lockable';
 
 const bootstrap = ({ strapi }: { strapi: Core.Strapi }) => {
   // bootstrap phase
@@ -10,8 +11,6 @@ const bootstrap = ({ strapi }: { strapi: Core.Strapi }) => {
   if (include && exclude) {
     console.warn('Both include and exclude cannot be used together for record-locking, ignoring exclude configuration.');
   }
-
-  const isCollectionLockable = (collection: string) => include !== undefined ? include.includes(collection) : exclude !== undefined ? !exclude.includes(collection) : true;
 
   const io = new Server(strapi.server.httpServer);
 
@@ -38,7 +37,7 @@ const bootstrap = ({ strapi }: { strapi: Core.Strapi }) => {
       return userHasAdequatePermissions;
     }
     return false;
-  }
+  };
   io.on('connection', (socket) => {
     socket.on('openEntity', async ({ entityDocumentId, entityId }) => {
       try {
@@ -83,7 +82,7 @@ const bootstrap = ({ strapi }: { strapi: Core.Strapi }) => {
                 entityDocumentId,
               },
             });
-          }  
+          }
           const userId = getUserIdFromToken(socket.handshake.auth.token);
           await strapi.db.query('plugin::record-locking.open-entity').create({
             data: {
@@ -98,7 +97,7 @@ const bootstrap = ({ strapi }: { strapi: Core.Strapi }) => {
             if (record.connectionId !== socket.id) {
               io.to(record.connectionId).emit('takeoverEntityPerformed', { entityId, entityDocumentId, username: `${user.firstname} ${user.lastname}` });
             }
-          }                  
+          }
           callback({success: true});
         }
         else {
@@ -106,7 +105,7 @@ const bootstrap = ({ strapi }: { strapi: Core.Strapi }) => {
         }
       } catch (error) {
         console.error('Error taking over a record-locking entry:', error);
-        callback({success: false, error: error.message});
+        callback({success: false, error: error?.message ?? 'Unknown error occurred'});
       }
 
     });

@@ -1,6 +1,8 @@
 import type { Core } from '@strapi/strapi';
 import DEFAULT_TRANSPORTS from '../constants/transports';
 import { DEFAULT_FOR_SHOW_TAKEOVER_BUTTON } from '../constants/config';
+import { isCollectionLockable } from '../utils/lockable';
+
 const controller = ({ strapi }: { strapi: Core.Strapi }) => ({
   async getSettings(ctx) {
     const settings = {
@@ -14,13 +16,19 @@ const controller = ({ strapi }: { strapi: Core.Strapi }) => ({
     ctx.send(settings);
   },
 
+  async isCollectionLockable(ctx) {
+    const { entityId } = ctx.request.params;
+    const isLockable = isCollectionLockable(entityId);
+    ctx.send(isLockable);
+  },
+
   async getStatusBySlug(ctx) {
-    const { entityDocumentId } = ctx.request.params;
+    const { entityId } = ctx.request.params;
     const { id: userId } = ctx.state.user;
 
     const data = await strapi.db.query('plugin::record-locking.open-entity').findOne({
       where: {
-        entityDocumentId,
+        entityId,
         user: {
           $not: userId,
         },
