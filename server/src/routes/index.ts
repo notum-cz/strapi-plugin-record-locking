@@ -9,7 +9,7 @@ export default [
   },
   {
     method: 'GET',
-    path: '/get-status/:entityDocumentId',
+    path: '/get-status/:entityId',
     handler: 'controller.getStatusBySlug',
     config: {
       policies: [],
