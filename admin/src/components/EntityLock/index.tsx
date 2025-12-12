@@ -127,7 +127,6 @@ const useLockStatus = () => {
           setIsLocked(false);
           setUsername('');
           setIsTakenOver(false);
-          location.reload();
         } else {
           console.warn(response.error);
         }
