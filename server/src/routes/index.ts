@@ -9,6 +9,14 @@ export default [
   },
   {
     method: 'GET',
+    path: '/is-collection-lockable/:entityId',
+    handler: 'controller.isCollectionLockable',
+    config: {
+      policies: [],
+    },
+  },
+  {
+    method: 'GET',
     path: '/get-status/:entityId',
     handler: 'controller.getStatusBySlug',
     config: {

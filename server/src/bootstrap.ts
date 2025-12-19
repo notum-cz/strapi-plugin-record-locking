@@ -1,8 +1,16 @@
 import type { Core } from '@strapi/strapi';
 import { Server } from 'socket.io';
+import { isCollectionLockable } from './utils/lockable';
 
 const bootstrap = ({ strapi }: { strapi: Core.Strapi }) => {
   // bootstrap phase
+
+  const include: string[] | undefined = strapi.plugin('record-locking').config('include');
+  const exclude: string[] | undefined = strapi.plugin('record-locking').config('exclude');
+
+  if (include && exclude) {
+    console.warn('Both include and exclude cannot be used together for record-locking, ignoring exclude configuration.');
+  }
 
   const io = new Server(strapi.server.httpServer);
 
@@ -29,12 +37,13 @@ const bootstrap = ({ strapi }: { strapi: Core.Strapi }) => {
       return userHasAdequatePermissions;
     }
     return false;
-  }
+  };
   io.on('connection', (socket) => {
     socket.on('openEntity', async ({ entityDocumentId, entityId }) => {
       try {
+        const lockable = isCollectionLockable(entityId);
         const userHasAdequatePermissions = await doesUserHaveAdequatePermissions(socket.handshake.auth.token, entityId);
-        if (userHasAdequatePermissions) {
+        if (lockable && userHasAdequatePermissions) {
             const userId = getUserIdFromToken(socket.handshake.auth.token);
             await strapi.db.query('plugin::record-locking.open-entity').create({
               data: {
@@ -53,6 +62,11 @@ const bootstrap = ({ strapi }: { strapi: Core.Strapi }) => {
 
     socket.on('takeoverEntity', async ({ entityId, entityDocumentId }, callback) => {
       try {
+        const lockable = isCollectionLockable(entityId);
+        if (!lockable) {
+          callback({success: false, error: 'Collection is configured to be not lockable.'});
+          return;
+        }
         const userHasAdequatePermissions = await doesUserHaveAdequatePermissions(socket.handshake.auth.token, entityId);
         if (userHasAdequatePermissions) {
           const existingLockRecords = await strapi.db.query('plugin::record-locking.open-entity').findMany({
@@ -83,7 +97,7 @@ const bootstrap = ({ strapi }: { strapi: Core.Strapi }) => {
             if (record.connectionId !== socket.id) {
               io.to(record.connectionId).emit('takeoverEntityPerformed', { entityId, entityDocumentId, username: `${user.firstname} ${user.lastname}` });
             }
-          }                  
+          }
           callback({success: true});
         }
         else {
