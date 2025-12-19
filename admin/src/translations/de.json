@@ -1,5 +1,7 @@
 {
   "ModalWindow.CurrentlyEditing": "Dieser Eintrag wird gerade bearbeitet",
   "ModalWindow.CurrentlyEditingBody": "Dieser Eintrag wird gerade durch {username} bearbeitet.",
-  "ModalWindow.CurrentlyEditing.Button": "Zurück"
+  "ModalWindow.CurrentlyEditing.Button": "Zurück",
+  "ModalWindow.TakeoverCurrentlyEditing.Button": "Übernahme",
+  "ModalWindow.CurrentlyTakenOverBody": "Dieser Eintrag wird von {username} bearbeitet."
 }

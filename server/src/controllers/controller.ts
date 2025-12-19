@@ -1,11 +1,12 @@
 import type { Core } from '@strapi/strapi';
 import DEFAULT_TRANSPORTS from '../constants/transports';
-
+import { DEFAULT_FOR_SHOW_TAKEOVER_BUTTON } from '../constants/config';
 const controller = ({ strapi }: { strapi: Core.Strapi }) => ({
   async getSettings(ctx) {
     const settings = {
       transports:
         strapi.plugin('record-locking').config('transports') || DEFAULT_TRANSPORTS,
+      showTakeoverButton: strapi.plugin('record-locking').config('showTakeoverButton') ?? DEFAULT_FOR_SHOW_TAKEOVER_BUTTON,
     };
 
     ctx.send(settings);
