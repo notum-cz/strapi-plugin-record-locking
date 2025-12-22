@@ -2352,7 +2352,7 @@
     typedoc-github-wiki-theme "1.1.0"
     typedoc-plugin-markdown "3.17.1"
 
-"@strapi/typescript-utils@5.4.0", "@strapi/typescript-utils@^5.0.0":
+"@strapi/typescript-utils@5.4.0":
   version "5.4.0"
   resolved "https://registry.yarnpkg.com/@strapi/typescript-utils/-/typescript-utils-5.4.0.tgz#b6611fd3e1f7daf68488402d4b80282d1fc4c9a9"
   integrity sha512-4ylbeVpB7W/+JVIXnuo7x8ebNar0zNAHlYsbaJjM1XRmETSPKveqaq8ndBQiFFxzEc+BtJXlcpPIxSpNqNJvdA==
@@ -2363,6 +2363,18 @@
     lodash "4.17.21"
     prettier "3.3.3"
     typescript "5.3.2"
+
+"@strapi/typescript-utils@^5.33.0":
+  version "5.33.0"
+  resolved "https://registry.yarnpkg.com/@strapi/typescript-utils/-/typescript-utils-5.33.0.tgz#b451f3e9d4e084d0b775a13c1ff299d2d40170e0"
+  integrity sha512-sPd54UWLkjxXHlI0I++23GaSFiVo8iPzNpgA5DWHdfO5kYXLdHqA8NYZh/F7uIYp4q8AoNmhtzR3Cls85H/8ng==
+  dependencies:
+    chalk "4.1.2"
+    cli-table3 "0.6.5"
+    fs-extra "11.2.0"
+    lodash "4.17.21"
+    prettier "3.3.3"
+    typescript "5.4.4"
 
 "@strapi/ui-primitives@2.0.0-rc.12":
   version "2.0.0-rc.12"
