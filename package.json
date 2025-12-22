@@ -65,7 +65,7 @@
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.28.0",
     "styled-components": "^6.1.13",
-    "typescript": "^5.6.3"
+    "typescript": "^5.9.3"
   },
   "peerDependencies": {
     "@strapi/sdk-plugin": "^5.3.2",
