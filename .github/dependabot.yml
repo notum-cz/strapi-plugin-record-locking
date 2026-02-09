@@ -17,3 +17,9 @@ updates:
       prefix: 'chore:'
     labels:
       - 'pr: chore'
+    ignore:
+      - dependency-name: "@strapi/*"
+        # Ignore versions of Strapi that are equal to or greater than 5.4.0
+        # Updating to the latest versions breaks backwards compatibility
+        # Using older deps works with newer versions of Strapi, but not the other way around
+        versions: [ ">=5.4.1" ]
