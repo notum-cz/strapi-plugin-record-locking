@@ -2,7 +2,7 @@
 
   <picture >
   <!-- User has no color preference: -->
-  <img src="assets/notum-logo.svg" height="60" alt="Description of what the image shows"/>
+  <img src="./assets/notum-logo.svg" height="60" alt="Notum Logo"/>
 </picture>
   <h1>Record Locking Plugin for Strapi</h1>
   
@@ -81,7 +81,7 @@ Avoid concurrent edits on the same record in Strapi. Notify users when a record 
 ### Screenshots
 
 <div align="center"> 
-  <img src="assets/record-locking.gif" alt="screenshot" />
+  <img src="./assets/record-locking.gif" alt="Record Locking Screen Capture" />
 </div>
 
 <!-- Supported Versions -->
