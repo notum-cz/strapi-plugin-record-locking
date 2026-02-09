@@ -23,7 +23,7 @@ Avoid concurrent edits on the same record in Strapi. Notify users when a record 
     <img src="https://img.shields.io/github/issues/notum-cz/strapi-plugin-record-locking" alt="open issues" />
   </a>
   <a href="https://github.com/notum-cz/strapi-plugin-record-locking/blob/master/LICENSE">
-    <img src="https://img.shields.io/github/license/notum-cz/strapi-plugin-record-locking.svg" alt="license" />
+    <img src="https://img.shields.io/github/license/notum-cz/strapi-plugin-record-locking" alt="license" />
   </a>
 </p>
    
