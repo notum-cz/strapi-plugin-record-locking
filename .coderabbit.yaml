@@ -1,0 +1,61 @@
+language: en
+
+reviews:
+  profile: assertive
+  auto_review:
+    enabled: true
+    drafts: false
+  request_changes_workflow: true
+  high_level_summary: true
+  poem: false
+  collapse_walkthrough: false
+  path_filters:
+    - "!dist/**"
+    - "!.planning/**"
+    - "!assets/**"
+    - "!node_modules/**"
+    - "!yarn.lock"
+  path_instructions:
+    - path: "admin/src/**"
+      instructions: |
+        This is the Strapi v5 admin panel code (React 18, styled-components, @strapi/design-system).
+        Focus on:
+        - Correct use of Strapi Design System components and patterns
+        - React hooks rules and dependency arrays
+        - Proper TypeScript typing (no `any` unless justified)
+        - TipTap v3 editor integration correctness
+        - Accessible UI (aria attributes, keyboard navigation)
+        - No direct DOM manipulation when React or TipTap APIs exist
+    - path: "server/src/**"
+      instructions: |
+        This is the Strapi v5 server-side plugin code (controllers, services, routes, content-types).
+        Focus on:
+        - Strapi v5 plugin API conventions (register, bootstrap, destroy lifecycle)
+        - Input validation and sanitization in controllers
+        - Proper error handling (no swallowed errors)
+        - Content-type schema correctness
+        - No secrets or credentials in code
+    - path: "shared/**"
+      instructions: |
+        Shared code consumed by both admin and server.
+        Focus on: no platform-specific imports (no React, no Strapi server APIs). Must stay isomorphic.
+    - path: "tests/**"
+      instructions: |
+        Test files using Vitest.
+        Focus on: meaningful assertions (not just snapshot-exists), proper mocking boundaries, no test interdependencies.
+    - path: "package.json"
+      instructions: |
+        When dependencies or devDependencies change, verify:
+        1. Are the new versions the latest stable releases? Check for newer versions.
+        2. Are peer dependency ranges still compatible?
+        3. No duplicate packages that overlap in purpose.
+        4. TipTap packages should all use the same major.minor range.
+        5. Strapi packages (@strapi/*) should all target the same major version.
+
+chat:
+  auto_reply: true
+
+tone_instructions: |
+  Be direct and concise. No filler words, no emojis in headings.
+  Every comment must be actionable or informational — if it is not, do not post it.
+  When suggesting a fix, show the corrected code. When flagging a risk, state the consequence.
