@@ -48,7 +48,7 @@
     "watch:link": "strapi-plugin watch:link"
   },
   "dependencies": {
-    "@strapi/design-system": "^2.1.2",
+    "@strapi/design-system": "^2.2.0",
     "@strapi/icons": "^2.1.2",
     "react-intl": "^7.1.14",
     "socket.io": "^4.8.3",
