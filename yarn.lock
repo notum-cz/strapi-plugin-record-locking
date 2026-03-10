@@ -3080,10 +3080,22 @@
     typedoc-plugin-markdown "3.17.1"
     zod "3.25.67"
 
-"@strapi/typescript-utils@5.37.0", "@strapi/typescript-utils@^5.4.0":
+"@strapi/typescript-utils@5.37.0":
   version "5.37.0"
   resolved "https://registry.yarnpkg.com/@strapi/typescript-utils/-/typescript-utils-5.37.0.tgz#fb901aedeecfaa27a001267c68d34f0bdbccbb16"
   integrity sha512-6MXLBdqgCXqw7/ojvYgYApYPhGMHZwI9f+n6WxqlGRuqWUEFErOXFTfUNrkhJIYH+Nmo3PuDAlNPIDyknA05Mw==
+  dependencies:
+    chalk "4.1.2"
+    cli-table3 "0.6.5"
+    fs-extra "11.2.0"
+    lodash "4.17.23"
+    prettier "3.3.3"
+    typescript "5.4.4"
+
+"@strapi/typescript-utils@^5.38.0":
+  version "5.38.0"
+  resolved "https://registry.yarnpkg.com/@strapi/typescript-utils/-/typescript-utils-5.38.0.tgz#1bdf9eb52a82ee1737dea0fa0e857dc0a1ec680f"
+  integrity sha512-3ejc61Jo9QEMqZOOJem1FEMgHnbOalobNxZVvER6bkbcgMeP4b0/q/wIRJVljge2/PeA8FMiDtQRob01gjFAPQ==
   dependencies:
     chalk "4.1.2"
     cli-table3 "0.6.5"
@@ -7860,12 +7872,12 @@ lodash.isplainobject@4.0.6:
   resolved "https://registry.yarnpkg.com/lodash.isplainobject/-/lodash.isplainobject-4.0.6.tgz#7c526a52d89b45c45cc690b88163be0497f550cb"
   integrity sha512-oSXzaWypCMHkPC3NvBEaPHf0KsA5mvPrOPgQWDsbg8n7orZ290M0BmC/jgRZ4vcJ6DTAhjrsSYgdsW/F+MFOBA==
 
-lodash@4.17.21, lodash@^4.17.20, lodash@^4.17.21, lodash@^4.17.4:
+lodash@4.17.21:
   version "4.17.21"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
   integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
 
-lodash@4.17.23:
+lodash@4.17.23, lodash@^4.17.20, lodash@^4.17.21, lodash@^4.17.4:
   version "4.17.23"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.23.tgz#f113b0378386103be4f6893388c73d0bde7f2c5a"
   integrity sha512-LgVTMpQtIopCi79SJeDiP0TfWi5CNEc/L/aRdTh3yIvmZXTnheWpKjSZhnvMl8iXbC1tFg9gdHHDMLoV7CnG+w==
