@@ -56,8 +56,6 @@ chat:
   auto_reply: true
 
 tone_instructions: |
-  Be direct and concise. No filler, no praise, no decorative content.
-  No poems, ASCII art, emojis in headings, or motivational language.
+  Be direct and concise. No filler words, no emojis in headings.
   Every comment must be actionable or informational — if it is not, do not post it.
   When suggesting a fix, show the corrected code. When flagging a risk, state the consequence.
-  Use short sentences. One issue per comment. Group related nitpicks into a single comment.
