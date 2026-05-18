@@ -13,7 +13,9 @@ import { getStoredToken } from '../../utils/getStoredToken';
 const useLockingData = () => {
   const collectionType = useMatch('/content-manager/collection-types/:entityId/:entityDocumentId');
   const singleType = useMatch('/content-manager/single-types/:entityId');
-  const cloneCollectionType = useMatch('/content-manager/collection-types/:entityId/clone/:entityDocumentId');
+  const cloneCollectionType = useMatch(
+    '/content-manager/collection-types/:entityId/clone/:entityDocumentId'
+  );
   const user = useAuth('ENTITY_LOCK', (state) => state.user);
 
   if (!user) return null;
@@ -56,10 +58,21 @@ const useLockStatus = () => {
   const socket = useRef<Socket | null>(null);
   const [isLocked, setIsLocked] = useState<boolean>(false);
   const [username, setUsername] = useState<string>('');
-  const [settings, setSettings] = useState<{ transports: Array<string>, showOKButtonToIgnoreLockWarning: boolean, showTakeoverButton: boolean, include: string[] | undefined, exclude: string[] | undefined } | null>(null);
+  const [settings, setSettings] = useState<{
+    transports: Array<string>;
+    showOKButtonToIgnoreLockWarning: boolean;
+    showTakeoverButton: boolean;
+    include: string[] | undefined;
+    exclude: string[] | undefined;
+  } | null>(null);
   const [isTakenOver, setIsTakenOver] = useState<boolean>(false);
 
-  const isCollectionLockable = (entityId: string) => settings?.include !== undefined ? settings.include.includes(entityId) : settings?.exclude !== undefined ? !settings.exclude.includes(entityId) : true;
+  const isCollectionLockable = (entityId: string) =>
+    settings?.include !== undefined
+      ? settings.include.includes(entityId)
+      : settings?.exclude !== undefined
+        ? !settings.exclude.includes(entityId)
+        : true;
 
   useEffect(() => {
     get('/record-locking/settings').then((response) => {
@@ -69,35 +82,52 @@ const useLockStatus = () => {
 
   useEffect(() => {
     const token = getStoredToken();
-    if (token && lockingData && lockingData?.requestData.entityDocumentId !== 'create' && settings
-      && lockingData?.requestData.entityId
+    if (
+      token &&
+      lockingData &&
+      lockingData?.requestData.entityDocumentId !== 'create' &&
+      settings &&
+      lockingData?.requestData.entityId
     ) {
-        get(`/record-locking/is-collection-lockable/${lockingData?.requestData.entityId}`).then((response) => {
+      get(`/record-locking/is-collection-lockable/${lockingData?.requestData.entityId}`).then(
+        (response) => {
           if (response.data) {
             socket.current = io(undefined, {
               reconnectionDelayMax: 10000,
               rejectUnauthorized: false,
               auth: (cb) => {
-                cb({token});
+                cb({ token });
               },
               transports: settings.transports,
             });
             socket.current.io.on('reconnect', attemptEntityLocking);
-            socket.current.on('takeoverEntityPerformed', (data: { entityDocumentId: string, entityId: string, username: string }) => { 
-              if (lockingData?.requestData.entityDocumentId === data.entityDocumentId && lockingData?.requestData.entityId === data.entityId) {
-                setIsLocked(true);
-                setUsername(data.username);
-                setIsTakenOver(true);
+            socket.current.on(
+              'takeoverEntityPerformed',
+              (data: { entityDocumentId: string; entityId: string; username: string }) => {
+                if (
+                  lockingData?.requestData.entityDocumentId === data.entityDocumentId &&
+                  lockingData?.requestData.entityId === data.entityId
+                ) {
+                  setIsLocked(true);
+                  setUsername(data.username);
+                  setIsTakenOver(true);
+                }
               }
-            });
+            );
             attemptEntityLocking();
           }
-        });
+        }
+      );
     }
 
     return () => {
-      if (token && lockingData?.requestData.entityDocumentId !== 'create' && settings
-        && (lockingData?.requestData.entityId && isCollectionLockable(lockingData?.requestData.entityId))) {
+      if (
+        token &&
+        lockingData?.requestData.entityDocumentId !== 'create' &&
+        settings &&
+        lockingData?.requestData.entityId &&
+        isCollectionLockable(lockingData?.requestData.entityId)
+      ) {
         socket.current?.off('takeoverEntityPerformed');
         socket.current?.emit('closeEntity', lockingData?.requestData);
         socket.current?.close();
@@ -122,7 +152,10 @@ const useLockStatus = () => {
   };
 
   const takeoverEntityLock = () => {
-    socket.current?.emit('takeoverEntity', lockingData?.requestData, (response: { success: boolean, error?: string }) => {
+    socket.current?.emit(
+      'takeoverEntity',
+      lockingData?.requestData,
+      (response: { success: boolean; error?: string }) => {
         if (response.success) {
           setIsLocked(false);
           setUsername('');
@@ -130,7 +163,8 @@ const useLockStatus = () => {
         } else {
           console.warn(response.error);
         }
-    });
+      }
+    );
   };
 
   return {
@@ -154,6 +188,7 @@ export default function EntityLock() {
     lockStatus.isLocked && (
       <Modal.Root defaultOpen={true}>
         <Modal.Content>
+          <div data-testid="entity-lock-modal" />
           <Modal.Header>
             <Typography fontWeight="bold" textColor="neutral800" as="h2" id="title">
               {formatMessage({
@@ -166,8 +201,12 @@ export default function EntityLock() {
             <Typography>
               {formatMessage(
                 {
-                  id: lockStatus.isTakenOver ? getTranslation('ModalWindow.CurrentlyTakenOverBody') : getTranslation('ModalWindow.CurrentlyEditingBody'),
-                  defaultMessage: lockStatus.isTakenOver ? 'This entry is taken over for editing by {username}' : 'This entry is currently edited by {username}',
+                  id: lockStatus.isTakenOver
+                    ? getTranslation('ModalWindow.CurrentlyTakenOverBody')
+                    : getTranslation('ModalWindow.CurrentlyEditingBody'),
+                  defaultMessage: lockStatus.isTakenOver
+                    ? 'This entry is taken over for editing by {username}'
+                    : 'This entry is currently edited by {username}',
                 },
                 {
                   username: <Typography fontWeight="bold">{lockStatus.username}</Typography>,
@@ -180,28 +219,24 @@ export default function EntityLock() {
               <Button variant="tertiary">OK</Button>
             </Modal.Close>
             <Flex gap={2} direction="row">
-              {
-                (lockStatus.settings?.showTakeoverButton ?? false) && (
-                  <Button
-                  onClick={lockStatus.takeoverEntityLock}
-                >
+              {(lockStatus.settings?.showTakeoverButton ?? false) && (
+                <Button onClick={lockStatus.takeoverEntityLock}>
                   {formatMessage({
                     id: getTranslation('ModalWindow.TakeoverCurrentlyEditing.Button'),
                     defaultMessage: 'Takeover',
                   })}
                 </Button>
-                )
-              }
-            <Button
-              onClick={() => {
-                navigate(-1);
-              }}
-            >
-              {formatMessage({
-                id: getTranslation('ModalWindow.CurrentlyEditing.Button'),
-                defaultMessage: 'Go Back',
-              })}
-            </Button>
+              )}
+              <Button
+                onClick={() => {
+                  navigate(-1);
+                }}
+              >
+                {formatMessage({
+                  id: getTranslation('ModalWindow.CurrentlyEditing.Button'),
+                  defaultMessage: 'Go Back',
+                })}
+              </Button>
             </Flex>
           </Modal.Footer>
         </Modal.Content>

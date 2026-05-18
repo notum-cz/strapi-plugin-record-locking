@@ -1,38 +1,36 @@
 <div align="center">
-
   <picture >
-  <!-- User has no color preference: -->
-  <img src="./assets/notum-logo.svg" height="60" alt="Notum Logo"/>
-</picture>
+    <!-- User has no color preference: -->
+    <img src="./assets/notum-logo.svg" height="60" alt="Notum Logo"/>
+  </picture>
+  
   <h1>Record Locking Plugin for Strapi</h1>
   
   <p>
-Avoid concurrent edits on the same record in Strapi. Notify users when a record is being edited by another user, with an optional takeover feature.
+    Avoid concurrent edits on the same record in Strapi. Notify users when a record is being edited by another user, with an optional takeover feature.
   </p>
   
   
 <!-- Badges -->
-<p>
-  <a href="https://github.com/notum-cz/strapi-plugin-record-locking/graphs/contributors">
-    <img src="https://img.shields.io/github/contributors/notum-cz/strapi-plugin-record-locking" alt="contributors" />
-  </a>
-  <a href="">
-    <img src="https://img.shields.io/github/last-commit/notum-cz/strapi-plugin-record-locking" alt="last update" />
-  </a>
-  <a href="https://github.com/notum-cz/strapi-plugin-record-locking/issues/">
-    <img src="https://img.shields.io/github/issues/notum-cz/strapi-plugin-record-locking" alt="open issues" />
-  </a>
-  <a href="https://github.com/notum-cz/strapi-plugin-record-locking/blob/master/LICENSE">
-    <img src="https://img.shields.io/github/license/notum-cz/strapi-plugin-record-locking" alt="license" />
-  </a>
-</p>
+  <p>
+    <a href="https://github.com/notum-cz/strapi-plugin-record-locking/graphs/contributors">
+      <img src="https://img.shields.io/github/contributors/notum-cz/strapi-plugin-record-locking" alt="contributors" />
+    </a>
+    <a href="">
+      <img src="https://img.shields.io/github/last-commit/notum-cz/strapi-plugin-record-locking" alt="last update" />
+    </a>
+    <a href="https://github.com/notum-cz/strapi-plugin-record-locking/issues">
+      <img src="https://img.shields.io/github/issues/notum-cz/strapi-plugin-record-locking" alt="open issues" />
+    </a>
+    <a href="https://github.com/notum-cz/strapi-plugin-record-locking/blob/master/LICENSE">
+      <img src="https://img.shields.io/github/license/notum-cz/strapi-plugin-record-locking" alt="license" />
+    </a>
+  </p>
    
-<h4>
+  <h4>
     <a href="https://github.com/notum-cz/strapi-plugin-record-locking/issues/">Report Bug or Request Feature</a>
-  
   </h4>
 </div>
-
 <br />
 
 <!-- Table of Contents -->
@@ -266,7 +264,7 @@ We're currently revising the roadmap for this plugin. Stay tuned for updates!
 
 We're a software agency specializing in custom solutions based on Strapi. We're passionate about sharing our expertise with the open-source community.
 
-This plugin is overseen by Ondřej Jánošík and it has been originally developed by [Martin Čapek](https://github.com/martincapek).
+This plugin is overseen by Ondřej Janošík and it has been originally developed by [Martin Čapek](https://github.com/martincapek).
 
 #### Current maintainer
 
@@ -295,4 +293,5 @@ Contributions are always welcome! Please follow these steps to contribute:
 2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
 3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+5. Run the tests to ensure everything is working correctly (`yarn test:e2e`) with a running instance of Strapi and the plugin installed
+6. Open a Pull Request
