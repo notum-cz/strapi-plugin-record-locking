@@ -2,7 +2,15 @@
   "name": "@notum-cz/strapi-plugin-record-locking",
   "version": "2.1.1",
   "description": "Hey I am editing, don't change my content",
-  "keywords": [],
+  "keywords": [
+    "strapi",
+    "plugin",
+    "strapi-plugin",
+    "record-locking",
+    "collaboration",
+    "real-time",
+    "socket.io"
+  ],
   "homepage": "https://github.com/notum-cz/strapi-plugin-record-locking#readme",
   "type": "commonjs",
   "bugs": {
@@ -48,35 +56,39 @@
     "watch:link": "strapi-plugin watch:link"
   },
   "dependencies": {
-    "@strapi/design-system": "^2.1.2",
-    "@strapi/icons": "^2.1.2",
-    "react-intl": "^7.1.14",
-    "socket.io": "^4.8.3",
-    "socket.io-client": "^4.8.3"
+    "socket.io": "4.8.3",
+    "socket.io-client": "4.8.3"
   },
   "devDependencies": {
+    "@strapi/design-system": "2.1.2",
+    "@strapi/icons": "2.1.2",
     "@strapi/sdk-plugin": "6.1.1",
-    "@strapi/strapi": "^5.4.0",
-    "@strapi/typescript-utils": "^5.4.0",
-    "@types/react": "^18.3.12",
-    "@types/react-dom": "^18.3.0",
-    "prettier": "^3.7.4",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-router-dom": "^6.28.0",
-    "styled-components": "^6.1.13",
-    "typescript": "^5.9.3"
+    "@strapi/strapi": "5.37.0",
+    "@strapi/typescript-utils": "5.37.0",
+    "@types/react": "18.3.12",
+    "@types/react-dom": "18.3.0",
+    "prettier": "3.8.4",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "react-intl": "7.1.14",
+    "react-router-dom": "6.28.0",
+    "typescript": "5.9.3"
   },
   "peerDependencies": {
-    "@strapi/sdk-plugin": "6.1.1",
+    "@strapi/design-system": "^2.1.2",
+    "@strapi/icons": "^2.1.2",
     "@strapi/strapi": "^5.4.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^6.28.0",
-    "styled-components": "^6.1.13"
+    "react-intl": "^7.1.14",
+    "react-router-dom": "^6.28.0"
+  },
+  "resolutions": {
+    "@types/react": "18.3.12",
+    "@types/react-dom": "18.3.0"
   },
   "engines": {
-    "node": ">=14.19.1 <=24.x.x",
+    "node": ">=18.0.0 <=24.x.x",
     "npm": ">=6.0.0"
   },
   "strapi": {

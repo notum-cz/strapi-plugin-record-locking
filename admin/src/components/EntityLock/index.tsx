@@ -155,7 +155,7 @@ export default function EntityLock() {
       <Modal.Root defaultOpen={true}>
         <Modal.Content>
           <Modal.Header>
-            <Typography fontWeight="bold" textColor="neutral800" as="h2" id="title">
+            <Typography fontWeight="bold" textColor="neutral800" tag="h2" id="title">
               {formatMessage({
                 id: getTranslation('ModalWindow.CurrentlyEditing'),
                 defaultMessage: 'This entry is currently edited',
